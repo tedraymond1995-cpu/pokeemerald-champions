@@ -12407,20 +12407,15 @@ const struct ItemInfo gItemsInfo[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
 
-    [ITEM_TM_HAIL] =
+    // Pokémon Emerald Champions: TM07 was Hail.
+    [ITEM_TM_SWORDS_DANCE] =
     {
         .name = ITEM_NAME("TM07"),
         .price = 3000,
         .description = COMPOUND_STRING(
-        #if B_PREFERRED_ICE_WEATHER == B_ICE_WEATHER_SNOW
-            "Boosts the\n"
-            "Defense of Ice-\n"
-            "types for 5 turns."),
-        #else
-            "Damages all\n"
-            "types except Ice\n"
-            "for 5 turns."),
-        #endif
+            "Sharply raises\n"
+            "the user's\n"
+            "Attack."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
@@ -12469,14 +12464,15 @@ const struct ItemInfo gItemsInfo[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
 
-    [ITEM_TM_SUNNY_DAY] =
+    // Pokémon Emerald Champions: TM11 was Sunny Day.
+    [ITEM_TM_NASTY_PLOT] =
     {
         .name = ITEM_NAME("TM11"),
-        .price = 2000,
+        .price = 3000,
         .description = COMPOUND_STRING(
-            "Boosts the power\n"
-            "of Fire-type moves\n"
-            "for 5 turns."),
+            "Sharply raises\n"
+            "the user's\n"
+            "Sp. Atk."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
@@ -12589,14 +12585,15 @@ const struct ItemInfo gItemsInfo[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
 
-    [ITEM_TM_RAIN_DANCE] =
+    // Pokémon Emerald Champions: TM18 was Rain Dance.
+    [ITEM_TM_DRAGON_DANCE] =
     {
         .name = ITEM_NAME("TM18"),
-        .price = 2000,
+        .price = 3000,
         .description = COMPOUND_STRING(
-            "Boosts the power\n"
-            "of Water-type\n"
-            "moves for 5 turns."),
+            "Raises the user's\n"
+            "Attack and\n"
+            "Speed."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
@@ -12855,14 +12852,15 @@ const struct ItemInfo gItemsInfo[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
 
-    [ITEM_TM_SANDSTORM] =
+    // Pokémon Emerald Champions: TM37 was Sandstorm.
+    [ITEM_TM_AGILITY] =
     {
         .name = ITEM_NAME("TM37"),
-        .price = 2000,
+        .price = 3000,
         .description = COMPOUND_STRING(
-            "Causes a sandstorm\n"
-            "that hits\n"
-            "over 5 turns."),
+            "Sharply raises\n"
+            "the user's\n"
+            "Speed."),
         .importance = I_REUSABLE_TMS,
         .pocket = POCKET_TM_HM,
         .type = ITEM_USE_PARTY_MENU,
