@@ -7,17 +7,21 @@
 
 u32 GetCurrentLevelCap(void)
 {
+    // Pokémon Emerald Champions level caps.
+    // Decided: 15 for gym 1, 22 for gym 2, 98 for the Elite Four.
+    // Everything in between is a draft. The post-gym-8 section will add
+    // its own story-flag entries between FLAG_BADGE08_GET and FLAG_IS_CHAMPION.
     static const u32 sLevelCapFlagMap[][2] =
     {
         {FLAG_BADGE01_GET, 15},
-        {FLAG_BADGE02_GET, 19},
-        {FLAG_BADGE03_GET, 24},
-        {FLAG_BADGE04_GET, 29},
-        {FLAG_BADGE05_GET, 31},
-        {FLAG_BADGE06_GET, 33},
-        {FLAG_BADGE07_GET, 42},
-        {FLAG_BADGE08_GET, 46},
-        {FLAG_IS_CHAMPION, 58},
+        {FLAG_BADGE02_GET, 22},
+        {FLAG_BADGE03_GET, 30},
+        {FLAG_BADGE04_GET, 38},
+        {FLAG_BADGE05_GET, 46},
+        {FLAG_BADGE06_GET, 55},
+        {FLAG_BADGE07_GET, 65},
+        {FLAG_BADGE08_GET, 75},
+        {FLAG_IS_CHAMPION, 98},
     };
 
     u32 i;

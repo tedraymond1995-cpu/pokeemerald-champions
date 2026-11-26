@@ -203,6 +203,7 @@ void NewGameInitData(void)
     gSaveBlock1Ptr->registeredItem = ITEM_NONE;
     ClearBag();
     NewGameInitPCItems();
+    AddBagItem(ITEM_ENDLESS_CANDY, 1); // Pokémon Emerald Champions: no grinding
     ClearPokeblocks();
     ClearDecorationInventories();
     InitEasyChatPhrases();
