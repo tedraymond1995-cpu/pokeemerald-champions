@@ -131,11 +131,10 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival::
 LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival::
 	@ Pokémon Emerald Champions: the Infinite Repel and the Endless Candy come with the starter.
 	@ Poké Balls wait until after the rival (the rival hands them over here, as in vanilla).
-	@ The Super Rod stays here until the Route 103 fisherman is in.
+	@ The Super Rod comes from the fisherman on Route 103's west rock.
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_TakeTheseSupplies, MSGBOX_DEFAULT
 	giveitem ITEM_INFINITE_REPEL
 	giveitem ITEM_ENDLESS_CANDY
-	giveitem ITEM_SUPER_ROD
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou, MSGBOX_DEFAULT
 	clearflag FLAG_HIDE_ROUTE_101_BOY
 	setvar VAR_BIRCH_LAB_STATE, 3
@@ -722,9 +721,8 @@ LittlerootTown_ProfessorBirchsLab_Text_TakeTheseSupplies:
 	.string "these, too.\p"
 	.string "An INFINITE REPEL to keep weak wild\n"
 	.string "POKéMON away whenever you like,\p"
-	.string "an ENDLESS CANDY to help your\n"
-	.string "POKéMON grow, and a SUPER ROD\l"
-	.string "for fishing.$"
+	.string "and an ENDLESS CANDY to help your\n"
+	.string "POKéMON grow.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
 	.string "PROF. BIRCH: Great!\n"
