@@ -1646,6 +1646,14 @@
       "y": 11,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_PETAL_GROTTO",
+      "name": "PETAL GROTTO",
+      "x": 0,
+      "y": 7,
+      "width": 1,
+      "height": 1
     }
   ]
 }

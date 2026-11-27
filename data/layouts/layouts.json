@@ -9334,6 +9334,17 @@
       "border_filepath": "data/layouts/LittlerootTown_Grotto/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootTown_Grotto/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_ROUTE104_PETAL_GROTTO",
+      "name": "Route104_PetalGrotto_Layout",
+      "width": 16,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/Route104_PetalGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/Route104_PetalGrotto/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }
