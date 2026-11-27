@@ -13,6 +13,8 @@
 #define OW_DEFOG_FIELD_MOVE             FALSE      // If enabled, Defog can be used as a Field Move as seen in DPPt.
 #define OW_ROCK_CLIMB_FIELD_MOVE        FALSE      // If enabled, Rock Climb can be used as a Field Move as seen in DPPt.
 #define OW_CHOOSE_FROM_PC_AND_PARTY     TRUE       // If enabled, NPCs like move tutors or trainers asking for trade will let you pick a Pokémon from your PC or party instead of just your party
+// Pokémon Emerald Champions: HMs work from the bag, as in Run & Bun.
+#define OW_HM_FIELD_MOVES_FROM_BAG      TRUE       // If enabled, a field move from an HM works once the player has that HM and the badge for it: no Pokémon needs to know the move. FLY and FLASH show up for every Pokémon in the party menu.
 
 // Item Obtain Description Box
 #define OW_ITEM_DESCRIPTIONS_OFF        0   // never show descriptions

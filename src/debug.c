@@ -37,6 +37,7 @@
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
+#include "playtest.h" // Pokémon Emerald Champions
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_icon.h"
@@ -290,6 +291,7 @@ static void DebugAction_Selection_NextStep(u8 taskId);
 static void DebugAction_Util_Fly(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
+static void DebugAction_Util_PlaytestSetup(u8 taskId); // Pokémon Emerald Champions
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -594,6 +596,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),           DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),            DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),               DebugAction_Util_CheatStart },
+    { COMPOUND_STRING("Playtest setup"),            DebugAction_Util_PlaytestSetup }, // Pokémon Emerald Champions
     { COMPOUND_STRING("Berry Functions…"),          DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
     { COMPOUND_STRING("EWRAM Counters…"),           DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),             DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
@@ -2005,6 +2008,17 @@ static void DebugAction_Util_CheatStart(u8 taskId)
         Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStartFrlg);
     else
         Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStart);
+}
+
+// Pokémon Emerald Champions: the playtest setup (data/scripts/playtest.inc), the same game state
+// as the ready-made playtest save.
+static void DebugAction_Util_PlaytestSetup(u8 taskId)
+{
+    if (!FlagGet(FLAG_SYS_CLOCK_SET))
+        RtcInitLocalTimeOffset(0, 0);
+
+    InitTimeBasedEvents();
+    Debug_DestroyMenu_Full_Script(taskId, Debug_EventScript_PlaytestSetup);
 }
 
 void BufferExpansionVersion(struct ScriptContext *ctx)

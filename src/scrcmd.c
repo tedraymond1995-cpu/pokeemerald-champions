@@ -2330,6 +2330,17 @@ bool8 ScrCmd_checkfieldmove(struct ScriptContext *ctx)
         }
     }
 
+    // Pokémon Emerald Champions: with the HM in the bag, no Pokémon needs to know the move.
+    if (gSpecialVar_Result == PARTY_SIZE)
+    {
+        u32 slot = GetHMFieldMoveUser(fieldMove);
+        if (slot < PARTY_SIZE)
+        {
+            gSpecialVar_Result = slot;
+            gSpecialVar_0x8004 = GetMonData(&gParties[B_TRAINER_PLAYER][slot], MON_DATA_SPECIES);
+        }
+    }
+
     return FALSE;
 }
 

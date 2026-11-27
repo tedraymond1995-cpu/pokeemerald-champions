@@ -2948,6 +2948,32 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     }
 }
 
+// Pokémon Emerald Champions: FLY and FLASH are used from the party menu, so with HMs working
+// from the bag (OW_HM_FIELD_MOVES_FROM_BAG) they show up for every Pokémon once the player has
+// the HM. The other HMs are used on the field itself (trees, rocks, water...).
+static void TryAppendHMFieldMove(struct Pokemon *mons, enum FieldMove fieldMove)
+{
+    u32 i, actionsAfter;
+
+    if (!PlayerHasHMForFieldMove(fieldMove))
+        return;
+
+    for (i = 0; i < sPartyMenuInternal->numActions; i++)
+    {
+        if (sPartyMenuInternal->actions[i] == fieldMove + MENU_FIELD_MOVES)
+            return;
+    }
+
+    // Leave room for SWITCH, ITEM and CANCEL.
+    actionsAfter = 1;
+    if (!InBattlePike())
+        actionsAfter += (GetMonData(&mons[1], MON_DATA_SPECIES) != SPECIES_NONE) ? 2 : 1;
+    if (sPartyMenuInternal->numActions + 1 + actionsAfter > ARRAY_COUNT(sPartyMenuInternal->actions))
+        return;
+
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, fieldMove + MENU_FIELD_MOVES);
+}
+
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
     u8 i, j;
@@ -2970,6 +2996,10 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
             }
         }
     }
+
+    // Pokémon Emerald Champions
+    TryAppendHMFieldMove(mons, FIELD_MOVE_FLY);
+    TryAppendHMFieldMove(mons, FIELD_MOVE_FLASH);
 
     if (!InBattlePike())
     {

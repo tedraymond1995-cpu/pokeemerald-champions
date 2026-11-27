@@ -1749,3 +1749,4 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wild_encounter.inc"
 	.include "data/scripts/honey_trees.inc" @ Pokémon Emerald Champions
 	.include "data/scripts/pokemon_center_services.inc" @ Pokémon Emerald Champions
+	.include "data/scripts/playtest.inc" @ Pokémon Emerald Champions

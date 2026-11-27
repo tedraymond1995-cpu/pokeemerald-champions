@@ -14,6 +14,7 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 - No grinding: the Endless Candy (`ITEM_ENDLESS_CANDY`, key item, Birch gives it with the starter) raises a level by one per use, stops at the cap, and is never used up.
 - Pokémon Center services attendant, as in Run & Bun: a receptionist at (12,2) in every Pokémon Center 1F (not the Battle Frontier's; Verdanturf's Expert moved to (13,4)) runs `PokemonCenter_EventScript_Services` (`data/scripts/pokemon_center_services.inc`; specials in `src/pokemon_center_services.c`; prices and menu rows in `include/constants/pokemon_center_services.h`; tests in `test/pokemon_center_services.c`). Relearn a level-up move: 1 Heart Scale. Forget a move: free. Max out one IV to 31: 1 Heart Scale each, refused if it's already 31. Change nature: 3 Heart Scales, done like a Mint (`MON_DATA_HIDDEN_NATURE`), so gender, ability and shininess stay, and the summary screen names the nature the stats use. Change nickname: free, Name Rater rules. Give a party Pokémon a status: free; Burn, Freeze, Paralysis, Poison or Sleep, replacing any status it had; refused for fainted Pokémon and for types and abilities that prevent it; sleep gets the longest counter (asleep for 6 turns, as in Run & Bun). Pokémon can come from the party or the PC, except for statuses. There will be more Heart Scales than in Run & Bun; they are finite rewards, never farmable.
 - Gimmicks: Megas only. Never give the player or any trainer Z-Moves, Dynamax or Tera.
+- HMs work from the bag, as in Run & Bun (`OW_HM_FIELD_MOVES_FROM_BAG` in `include/config/overworld.h`): the HM plus its badge are enough and no Pokémon needs to know the move. A party Pokémon that knows the move still uses it; otherwise the first one that could learn it (else the first one) shows up as the user (`GetHMFieldMoveUser` in `src/field_move.c`); FLY and FLASH show up for every Pokémon in the party menu once the player has the HM. HM moves can be forgotten or replaced (`P_CAN_FORGET_HIDDEN_MOVE TRUE`, `B_CATCH_SWAP_CHECK_HMS FALSE`). Tests in `test/hm_from_bag.c`.
 - No EVs anywhere (`EV_CAP_NO_GAIN` plus `B_EV_ITEMS_CAP TRUE`). Trainer parties use no EVs.
 - No weather or terrain for the player: no setter abilities on catchable Pokémon, and setter moves are removed from what the player's Pokémon can learn. Enemies may use them, and some fights start with a permanent field effect (`Starting Status` in `trainers.party`).
 - Affection effects are off (`B_AFFECTION_MECHANICS FALSE`): random survival and crits break planning.
@@ -47,6 +48,7 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 - New game setup: `src/new_game.c`
 - Maps and event scripts: `data/maps/<Map>/` (`map.json`, `scripts.inc`). The owner edits map layouts in Porymap. A new map also needs its `scripts.inc` included in `data/event_scripts.s`, its name appended to a group in `data/maps/map_groups.json` (append, so existing map numbers don't shift), its layout in `data/layouts/layouts.json`, and, for a new area name, an entry appended to `src/data/region_map/region_map_sections.json` (16 characters at most).
 - Battle and AI tests: `test/battle/` (for example `test/battle/ai/`)
+- Playtest save, for moving around freely: `Playtest_EventScript_Setup` in `data/scripts/playtest.inc` gives all badges and HMs, marks every trainer beaten, opens every FLY spot, gives both bikes, the rods, the Infinite Repel (on) and a level 100 team, and counts the story as done up to Wattson in this hack's order. It runs from the debug menu (hold R and press START, Utilities > Playtest setup) on any game. `tools/make_playtest_save.py` writes the same state as a ready-made save (a new game named TED, continuing outside Petalburg's Pokémon Center) by running `test/playtest_save.c` in the test ROM: `make pokeemerald-test.elf`, then `python3 tools/make_playtest_save.py pokeemerald-test.elf <name>.sav`. The save only fits builds with the same save layout (`test/save.c`); build a new one after save-block changes.
 
 ## Build
 
@@ -58,12 +60,12 @@ sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-n
 make -j$(nproc)
 ```
 
-A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `make check` runs the test suite (about 6,500 tests, slow on 2 cores).
+A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `make check` runs the test suite (about 5,900 tests, about 45 minutes on 2 cores). Seven upstream tests fail because of this hack's rules and are expected: six in `test/battle/exp.c` (hard level caps stop EXP) and the Embargo EV test in `test/battle/move_effect/embargo.c` (no EVs). Everything else should pass.
 
 ## Workflow
 
 - Work on a branch, push it, and open a pull request. The owner has approved Claude merging its own pull requests once the change is in a test build, so merge as you go and say so.
-- After a build, give the owner the ROM to playtest: attach it in chat, and copy it into the build folder on their PC when the desktop app has that folder connected.
+- After a build, give the owner the ROM to playtest: attach it in chat, and copy it into the build folder on their PC when the desktop app has that folder connected. The playtest save there is `emerald-champions-playtest.sav`; copied and renamed to match a ROM (same name, `.sav`), mGBA loads it with that ROM.
 - Never commit ROMs or saves (`*.gba` and `*.sav` are gitignored). Releases ship as `.bps` patches.
 - Keep the RHH credit line in `README.md`.
 - Mark every hack-specific change in engine code with a short `Pokémon Emerald Champions` comment, so upstream merges stay easy.
