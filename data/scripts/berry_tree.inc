@@ -23,6 +23,14 @@ BerryTree_EventScript_Sparkling::
 BerryTree_EventScript_CheckSoil::
 	lock
 	faceplayer
+.if OW_BERRY_FINITE == TRUE
+	@ Pokémon Emerald Champions: berries are finite, so nothing can be planted.
+	message BerryTree_Text_NothingWillGrow
+	waitmessage
+	waitbuttonpress
+	release
+	end
+.endif
 	specialvar VAR_RESULT, PlayerHasBerries
 	goto_if_eq VAR_RESULT, TRUE, BerryTree_EventScript_WantToPlant
 	specialvar VAR_RESULT, PlayerHasMulch
@@ -318,10 +326,22 @@ BerryTree_Text_PickedTheBerry:
 	.string "{PLAYER} picked the {STR_VAR_2} {STR_VAR_1}.$"
 
 BerryTree_Text_PutAwayBerry:
+.if OW_BERRY_FINITE == TRUE
+	@ Pokémon Emerald Champions: picked trees never grow back.
+	.string "{PLAYER} put away the {STR_VAR_1}\n"
+	.string "in the BAG's BERRIES POCKET.\p"
+	.string "That was every BERRY on the tree.\n"
+	.string "Nothing more will grow here.$"
+.else
 	.string "{PLAYER} put away the {STR_VAR_1}\n"
 	.string "in the BAG's BERRIES POCKET.\p"
 	.string "The soil returned to its soft and\n"
 	.string "loamy state.$"
+.endif
+
+@ Pokémon Emerald Champions
+BerryTree_Text_NothingWillGrow:
+	.string "Nothing will grow in this soil.$"
 
 BerryTree_Text_BerryPocketFull:
 	.string "The BAG's BERRIES POCKET is full.\p"

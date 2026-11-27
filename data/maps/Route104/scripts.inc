@@ -910,6 +910,18 @@ Route104_EventScript_Ivan::
 	msgbox Route104_Text_IvanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+@ Pokémon Emerald Champions: optional trainers guard the berry patches.
+@ Tiana (from Route 102) guards the south patch, Lyle (from Petalburg Woods) the north-west one.
+Route104_EventScript_Tiana::
+	trainerbattle_single TRAINER_TIANA, Route104_Text_TianaIntro, Route104_Text_TianaDefeated
+	msgbox Route104_Text_TianaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route104_EventScript_Lyle::
+	trainerbattle_single TRAINER_LYLE, Route104_Text_LyleIntro, Route104_Text_LyleDefeated
+	msgbox Route104_Text_LylePostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route104_EventScript_Billy::
 	trainerbattle_single TRAINER_BILLY, Route104_Text_BillyIntro, Route104_Text_BillyDefeat
 	msgbox Route104_Text_BillyPostBattle, MSGBOX_AUTOCLOSE
@@ -1244,3 +1256,16 @@ Route104_Text_LandedInSlateportGetGoodsBack:
 	.string "somewhere in town.\p"
 	.string "Go and get those DEVON GOODS back!\n"
 	.string "PEEKO and I will wait right here.$"
+
+Route104_Text_LyleIntro:
+	.string "I caught a whole bunch of POKéMON!\p"
+	.string "Go, go, go!\n"
+	.string "My BUG POKéMON team!$"
+
+Route104_Text_LyleDefeated:
+	.string "I have all these POKéMON,\n"
+	.string "but I couldn't win…$"
+
+Route104_Text_LylePostBattle:
+	.string "I caught a bunch of POKéMON.\n"
+	.string "Now I'm out of POKé BALLS.$"
