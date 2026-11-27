@@ -199,6 +199,36 @@ Route103_EventScript_RouteSign::
 	msgbox Route103_Text_RouteSign, MSGBOX_SIGN
 	end
 
+@ Pokémon Emerald Champions: the SUPER ROD comes from this fisherman on the west rock
+@ (Run & Bun puts one here). Saves from before he existed already have the rod from BIRCH.
+Route103_EventScript_SuperRodFisherman::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECEIVED_SUPER_ROD, Route103_EventScript_SuperRodFishermanAfter
+	checkitem ITEM_SUPER_ROD
+	goto_if_eq VAR_RESULT, TRUE, Route103_EventScript_AlreadyHaveSuperRod
+	msgbox Route103_Text_WantToFish, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route103_EventScript_DeclineSuperRod
+	msgbox Route103_Text_TakeMySuperRod, MSGBOX_DEFAULT
+	giveitem ITEM_SUPER_ROD
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_SUPER_ROD
+	msgbox Route103_Text_SuperRodAdvice, MSGBOX_DEFAULT
+	release
+	end
+
+Route103_EventScript_AlreadyHaveSuperRod::
+	setflag FLAG_RECEIVED_SUPER_ROD
+Route103_EventScript_SuperRodFishermanAfter::
+	msgbox Route103_Text_BigOnesInDeepWater, MSGBOX_DEFAULT
+	release
+	end
+
+Route103_EventScript_DeclineSuperRod::
+	msgbox Route103_Text_FishArentGoingAnywhere, MSGBOX_DEFAULT
+	release
+	end
+
 Route103_EventScript_Daisy::
 	trainerbattle_single TRAINER_DAISY, Route103_Text_DaisyIntro, Route103_Text_DaisyDefeated
 	msgbox Route103_Text_DaisyPostBattle, MSGBOX_AUTOCLOSE
@@ -351,3 +381,29 @@ Route103_Text_RouteSign:
 	.string "ROUTE 103\n"
 	.string "{DOWN_ARROW} OLDALE TOWN$"
 
+
+@ Pokémon Emerald Champions
+Route103_Text_WantToFish:
+	.string "Fish bite all day long out here\n"
+	.string "on this rock.\p"
+	.string "You've got that look, kid.\n"
+	.string "Want to try some fishing?$"
+
+Route103_Text_TakeMySuperRod:
+	.string "Ha! I knew it!\n"
+	.string "Here, take my spare SUPER ROD.$"
+
+Route103_Text_SuperRodAdvice:
+	.string "Face the water and use the ROD.\n"
+	.string "When something bites, reel it in!\p"
+	.string "You can fish in any water you find,\n"
+	.string "even the pond back in LITTLEROOT.$"
+
+Route103_Text_BigOnesInDeepWater:
+	.string "Reeled in anything good yet?\n"
+	.string "Every stretch of water hides\l"
+	.string "different POKéMON.$"
+
+Route103_Text_FishArentGoingAnywhere:
+	.string "Suit yourself.\n"
+	.string "The fish aren't going anywhere.$"
