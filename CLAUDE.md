@@ -6,7 +6,8 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 
 - Difficulty matches Run & Bun. The player gets a bit more power (setup moves, customization), and fights are tuned around it.
 - Keep the Emerald world and story feel. Routing forces mandatory trainers; optional trainers are tricky but easier. Use back-to-back battles and gauntlets.
-- Level caps are hard (no EXP at the cap), set per badge in `src/caps.c`. Decided: 15 at gym 1, 22 at gym 2, 98 for the Elite Four. The other values are a draft.
+- Gym order is Run & Bun's: Brawly, Roxanne, Wattson, Norman, Flannery, Winona, Tate & Liza, Juan. Splits follow Run & Bun's too (Brawly, Roxanne, Wattson, Norman, Fallarbor, Flannery, Winona, Mt. Pyre, Hideouts, Tate & Liza, Space Center/Seafloor, Juan, Victory Road).
+- Level caps are hard (no EXP at the cap), listed in play order in `src/caps.c`. Decided: 15 at gym 1, 22 at gym 2, 98 for the Elite Four. The other values are a draft.
 - 12 Rare Candies in the whole game, scarce or earned. They can go over the cap (`B_RARE_CANDY_CAP FALSE`): 12 = 6 Pokémon × 2 levels, so saving all of them gives a level 100 team for the E4.
 - No grinding: the Endless Candy (`ITEM_ENDLESS_CANDY`, key item, given at new game) raises a level by one per use, stops at the cap, and is never used up.
 - Heart Scale NPC at Pokémon Centers (move relearning, IV maxing, nature changes), with more Heart Scales than Run & Bun. They are finite rewards, never farmable.
@@ -22,6 +23,7 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 
 ## Where things live
 
+- Design source for trainers and encounters: the owner's Google Sheet "Emerald Champions Master Sheet" (Trainers and Encounters tabs, one row per Pokémon). Its ID column names the `trainers.party` entry each row belongs to; one row can name several IDs that share a team (May and Brendan rival variants). The sheet is the source of truth for designed trainers: sync it into `trainers.party` rather than hand-editing those entries.
 - Trainer teams: `src/data/trainers.party` (Showdown export format, documented at the top of the file)
 - Wild encounters: `src/data/wild_encounters.json`
 - Level caps: `src/caps.c`; cap and EV settings: `include/config/caps.h`
@@ -46,6 +48,7 @@ A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `
 ## Workflow
 
 - Work on a branch, push it, and open a pull request for the owner to merge.
+- After a build, give the owner the ROM to playtest: attach it in chat, and copy it into the build folder on their PC when the desktop app has that folder connected.
 - Never commit ROMs or saves (`*.gba` and `*.sav` are gitignored). Releases ship as `.bps` patches.
 - Keep the RHH credit line in `README.md`.
 - Mark every hack-specific change in engine code with a short `Pokémon Emerald Champions` comment, so upstream merges stay easy.
