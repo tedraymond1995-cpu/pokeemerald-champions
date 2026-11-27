@@ -1,115 +1,83 @@
 PetalburgWoods_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgWoods_OnTransition
 	.byte 0
 
-PetalburgWoods_EventScript_DevonResearcherLeft::
-	lockall
-	call PetalburgWoods_EventScript_DevonResearcherIntro
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherApproachPlayerLeft
-	waitmovement 0
-	msgbox PetalburgWoods_Text_HaveYouSeenShroomish, MSGBOX_DEFAULT
-	closemessage
-	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaEntrance
-	waitmovement 0
-	msgbox PetalburgWoods_Text_IWasGoingToAmbushYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaApproachResearcherLeft
-	waitmovement 0
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox PetalburgWoods_Text_HandOverThosePapers, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherFleeToPlayerLeft
-	waitmovement 0
-	msgbox PetalburgWoods_Text_YouHaveToHelpMe, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaApproachPlayer
-	waitmovement 0
-	msgbox PetalburgWoods_Text_NoOneCrossesTeamAqua, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_GRUNT_PETALBURG_WOODS, PetalburgWoods_Text_YoureKiddingMe
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaBackOff
-	waitmovement 0
-	call PetalburgWoods_EventScript_DevonResearcherPostBattle
-	applymovement LOCALID_PLAYER, PetalburgWoods_Movement_WatchResearcherLeave
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherExitLeft
-	waitmovement 0
-	goto PetalburgWoods_EventScript_RemoveDevonResearcher
+PetalburgWoods_OnTransition:
+	call_if_eq VAR_PETALBURG_WOODS_STATE, 1, PetalburgWoods_EventScript_SetResearcherBlockingPath
 	end
 
-PetalburgWoods_EventScript_DevonResearcherRight::
-	lockall
-	call PetalburgWoods_EventScript_DevonResearcherIntro
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherApproachPlayerRight
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
-	msgbox PetalburgWoods_Text_HaveYouSeenShroomish, MSGBOX_DEFAULT
-	closemessage
-	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaEntrance
-	waitmovement 0
-	msgbox PetalburgWoods_Text_IWasGoingToAmbushYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaApproachResearcherRight
-	waitmovement 0
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox PetalburgWoods_Text_HandOverThosePapers, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherFleeToPlayerRight
-	waitmovement 0
-	msgbox PetalburgWoods_Text_YouHaveToHelpMe, MSGBOX_DEFAULT
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox PetalburgWoods_Text_NoOneCrossesTeamAqua, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_GRUNT_PETALBURG_WOODS, PetalburgWoods_Text_YoureKiddingMe
-	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaBackOff
-	waitmovement 0
-	call PetalburgWoods_EventScript_DevonResearcherPostBattle
-	applymovement LOCALID_PLAYER, PetalburgWoods_Movement_WatchResearcherLeave
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherExitRight
-	waitmovement 0
-	goto PetalburgWoods_EventScript_RemoveDevonResearcher
-	end
+@ Pokémon Emerald Champions: the scene path is one tile wide, so the DEVON RESEARCHER blocks
+@ the way to RUSTBORO after TEAM AQUA steals the DEVON GOODS. He stays until CAPT. STERN has
+@ them back (FLAG_HIDE_PETALBURG_WOODS_DEVON_EMPLOYEE is set in the OCEANIC MUSEUM).
+PetalburgWoods_EventScript_SetResearcherBlockingPath::
+	setobjectxyperm LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, 27, 22
+	setobjectmovementtype LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_DOWN
+	return
 
-PetalburgWoods_EventScript_DevonResearcherIntro::
+@ Pokémon Emerald Champions: one scene for the one-tile path (vanilla had a left and a right
+@ version). The player stands at (27, 23), the researcher ends at (27, 22) and the grunt at (27, 21).
+PetalburgWoods_EventScript_DevonResearcher::
+	lockall
 	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherLookAround
 	waitmovement 0
 	msgbox PetalburgWoods_Text_NotAOneToBeFound, MSGBOX_DEFAULT
 	closemessage
-	return
-
-PetalburgWoods_EventScript_DevonResearcherPostBattle::
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherApproachPlayer
+	waitmovement 0
+	msgbox PetalburgWoods_Text_HaveYouSeenShroomish, MSGBOX_DEFAULT
+	closemessage
+	playbgm MUS_ENCOUNTER_AQUA, FALSE
+	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaEntrance
+	waitmovement 0
+	msgbox PetalburgWoods_Text_IWasGoingToAmbushYou, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaApproachResearcher
+	waitmovement 0
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox PetalburgWoods_Text_HandOverThoseGoods, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox PetalburgWoods_Text_YouHaveToHelpMe, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox PetalburgWoods_Text_NoOneCrossesTeamAqua, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_GRUNT_PETALBURG_WOODS, PetalburgWoods_Text_YoureKiddingMe
 	msgbox PetalburgWoods_Text_YouveGotSomeNerve, MSGBOX_DEFAULT
+	closemessage
+	@ He snatches the DEVON GOODS and runs off with them.
+	applymovement LOCALID_PETALBURG_WOODS_GRUNT, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	playse SE_M_SCRATCH
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox PetalburgWoods_Text_GotTheGoods, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PETALBURG_WOODS_GRUNT, PetalburgWoods_Movement_AquaRunAway
 	waitmovement 0
 	removeobject LOCALID_PETALBURG_WOODS_GRUNT
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox PetalburgWoods_Text_ThatWasAwfullyClose, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_TheyTookTheGoods, MSGBOX_DEFAULT
 	giveitem ITEM_GREAT_BALL
-	goto_if_eq VAR_RESULT, FALSE, PetalburgWoods_EventScript_BagFull
-	goto PetalburgWoods_EventScript_DevonResearcherFinish
+	call_if_eq VAR_RESULT, FALSE, PetalburgWoods_EventScript_BagFull
+	msgbox PetalburgWoods_Text_NobodyGetsPastMe, MSGBOX_DEFAULT
+	closemessage
+	setobjectmovementtype LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_DOWN
+	copyobjectxytoperm LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE
+	setvar VAR_PETALBURG_WOODS_STATE, 1
+	releaseall
 	end
 
 PetalburgWoods_EventScript_BagFull::
 	msgbox PetalburgWoods_Text_YoureLoadedWithItems, MSGBOX_DEFAULT
-	goto PetalburgWoods_EventScript_DevonResearcherFinish
-	end
-
-PetalburgWoods_EventScript_DevonResearcherFinish::
-	msgbox PetalburgWoods_Text_TeamAquaAfterSomethingInRustboro, MSGBOX_DEFAULT
-	applymovement LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE, PetalburgWoods_Movement_DevonResearcherStartExit
-	waitmovement 0
-	msgbox PetalburgWoods_Text_ICantBeWastingTime, MSGBOX_DEFAULT
-	closemessage
 	return
 
-PetalburgWoods_EventScript_RemoveDevonResearcher::
-	removeobject LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE
-	setvar VAR_PETALBURG_WOODS_STATE, 1
-	releaseall
+@ Pokémon Emerald Champions: what he says while he blocks the path.
+PetalburgWoods_EventScript_DevonResearcherWaiting::
+	msgbox PetalburgWoods_Text_PleaseGetTheGoodsBack, MSGBOX_NPC
 	end
 
 PetalburgWoods_Movement_DevonResearcherLookAround:
@@ -131,83 +99,24 @@ PetalburgWoods_Movement_DevonResearcherLookAround:
 	delay_16
 	step_end
 
-PetalburgWoods_Movement_DevonResearcherExitLeft:
-	walk_fast_right
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	step_end
-
-PetalburgWoods_Movement_DevonResearcherApproachPlayerLeft:
-	delay_16
-	face_player
-	walk_down
-	walk_down
-	step_end
-
-PetalburgWoods_Movement_DevonResearcherApproachPlayerRight:
+PetalburgWoods_Movement_DevonResearcherApproachPlayer:
 	delay_16
 	face_player
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_faster_right
 	step_end
 
-PetalburgWoods_Movement_DevonResearcherExitRight:
-	walk_fast_left
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
-	step_end
-
-PetalburgWoods_Movement_WatchResearcherLeave:
+PetalburgWoods_Movement_AquaEntrance:
+	walk_down
+	walk_down
 	delay_16
 	delay_16
-	walk_in_place_faster_up
 	step_end
 
-PetalburgWoods_Movement_DevonResearcherFleeToPlayerLeft:
-	walk_fast_right
+PetalburgWoods_Movement_AquaApproachResearcher:
 	walk_fast_down
 	walk_fast_down
-	walk_fast_left
-	walk_in_place_faster_up
-	step_end
-
-PetalburgWoods_Movement_DevonResearcherFleeToPlayerRight:
-	walk_fast_down
-	walk_fast_right
-	walk_in_place_faster_up
-	step_end
-
-PetalburgWoods_Movement_DevonResearcherStartExit:
-	walk_in_place_faster_down
-	delay_16
-	delay_16
-	delay_16
-	delay_16
-	delay_16
-	face_up
-	step_end
-
-PetalburgWoods_Movement_AquaApproachResearcherLeft:
-	walk_fast_down
-	walk_fast_down
-	step_end
-
-PetalburgWoods_Movement_AquaBackOff:
-	lock_facing_direction
-	walk_up
-	unlock_facing_direction
 	step_end
 
 PetalburgWoods_Movement_AquaRunAway:
@@ -218,23 +127,6 @@ PetalburgWoods_Movement_AquaRunAway:
 	walk_fast_up
 	delay_16
 	delay_16
-	step_end
-
-PetalburgWoods_Movement_AquaApproachResearcherRight:
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	step_end
-
-PetalburgWoods_Movement_AquaEntrance:
-	walk_down
-	walk_down
-	delay_16
-	delay_16
-	step_end
-
-PetalburgWoods_Movement_AquaApproachPlayer:
-	walk_down
 	step_end
 
 PetalburgWoods_EventScript_Boy1::
@@ -330,9 +222,9 @@ PetalburgWoods_Text_IWasGoingToAmbushYou:
 	.string "forever, didn't you?\p"
 	.string "I got sick of waiting, so here I am!$"
 
-PetalburgWoods_Text_HandOverThosePapers:
+PetalburgWoods_Text_HandOverThoseGoods:
 	.string "You! DEVON RESEARCHER!\p"
-	.string "Hand over those papers!$"
+	.string "Hand over those DEVON GOODS!$"
 
 PetalburgWoods_Text_YouHaveToHelpMe:
 	.string "Aiyeeeh!\p"
@@ -351,34 +243,49 @@ PetalburgWoods_Text_YoureKiddingMe:
 
 PetalburgWoods_Text_YouveGotSomeNerve:
 	.string "Grrr… You've got some nerve\n"
-	.string "meddling with TEAM AQUA!\l"
-	.string "Come on and battle me again!\p"
-	.string "I wish I could say that, but I'm out of\n"
-	.string "POKéMON…\p"
-	.string "And, hey, we of TEAM AQUA are also\n"
-	.string "after something in RUSTBORO.\p"
-	.string "I'll let you go today!$"
-
-PetalburgWoods_Text_ThatWasAwfullyClose:
-	.string "Whew…\n"
-	.string "That was awfully close!\p"
-	.string "Thanks to you, he didn't rob me of\n"
-	.string "these important papers.\p"
-	.string "I know, I'll give you a GREAT BALL as\n"
-	.string "my thanks!$"
-
-PetalburgWoods_Text_TeamAquaAfterSomethingInRustboro:
-	.string "Didn't that TEAM AQUA thug say\n"
-	.string "they were after something in\l"
-	.string "RUSTBORO, too?$"
-
-PetalburgWoods_Text_ICantBeWastingTime:
-	.string "Uh-oh! It's a crisis!\n"
-	.string "I can't be wasting time!$"
+	.string "meddling with TEAM AQUA!\p"
+	.string "I'd battle you again, but I'm out\n"
+	.string "of POKéMON…\p"
+	.string "Heh. But I'm not leaving here\n"
+	.string "empty-handed!$"
 
 PetalburgWoods_Text_YoureLoadedWithItems:
 	.string "You're loaded with items.\n"
 	.string "I can't give you this GREAT BALL.$"
+
+@ Pokémon Emerald Champions
+PetalburgWoods_Text_GotTheGoods:
+	.string "Got 'em! The BOSS is gonna love this!\p"
+	.string "So long, kiddo!$"
+
+@ Pokémon Emerald Champions
+PetalburgWoods_Text_TheyTookTheGoods:
+	.string "No… He took the DEVON GOODS!\p"
+	.string "Those parts were for CAPT. STERN,\n"
+	.string "the ocean scientist in SLATEPORT.\p"
+	.string "TEAM AQUA must be after his\n"
+	.string "submarine!\p"
+	.string "Please, you have to get them back!\n"
+	.string "I can't go back to DEVON without them.\p"
+	.string "MR. BRINEY lives by the sea, just\n"
+	.string "south of these woods.\p"
+	.string "His boat could get you to SLATEPORT!\p"
+	.string "Here, take this for trying to\n"
+	.string "help me!$"
+
+@ Pokémon Emerald Champions
+PetalburgWoods_Text_NobodyGetsPastMe:
+	.string "I'll keep watch right here, in case\n"
+	.string "those crooks come back this way.\p"
+	.string "Nobody gets past me again!$"
+
+@ Pokémon Emerald Champions
+PetalburgWoods_Text_PleaseGetTheGoodsBack:
+	.string "Please get the DEVON GOODS back\n"
+	.string "from TEAM AQUA in SLATEPORT!\p"
+	.string "MR. BRINEY's cottage is on the beach,\n"
+	.string "just south of these woods.\p"
+	.string "Until then, nobody gets past me!$"
 
 PetalburgWoods_Text_GoBugPokemonTeam:
 	.string "I caught a whole bunch of POKéMON!\p"

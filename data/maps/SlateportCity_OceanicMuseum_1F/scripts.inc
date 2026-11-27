@@ -257,9 +257,11 @@ SlateportCity_OceanicMuseum_1F_Text_CanLearnForNefariousDeeds:
 	.string "What I learn here, I can put to use on\n"
 	.string "nefarious deeds…$"
 
+@ Pokémon Emerald Champions: TEAM AQUA's theft happened in PETALBURG WOODS.
 SlateportCity_OceanicMuseum_1F_Text_RustboroBungled:
-	.string "If our goons didn't bungle things\n"
-	.string "in RUSTBORO, we wouldn't be here!$"
+	.string "We got our hands on DEVON's parts.\p"
+	.string "Now all we need is someone who knows\n"
+	.string "how to build a submarine…$"
 
 SlateportCity_OceanicMuseum_1F_Text_DidntHaveMoney:
 	.string "I didn't have ¥50, so it took a long\n"
@@ -286,12 +288,15 @@ SlateportCity_OceanicMuseum_1F_Text_WantSeaPokemon:
 	.string "I think it would feel cool and nice\n"
 	.string "to hug.$"
 
+@ Pokémon Emerald Champions: TEAM AQUA's theft happened in PETALBURG WOODS.
 SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis:
 	.string "Aiyeeeh!\n"
 	.string "What are you doing here?\p"
 	.string "Me? I'm the TEAM AQUA member\n"
 	.string "you thumped before, remember?\l"
-	.string "Back in RUSTURF TUNNEL?\p"
+	.string "Back in PETALBURG WOODS?\p"
+	.string "I already gave those DEVON GOODS\n"
+	.string "to the guys upstairs, so leave me be!\p"
 	.string "Here, take this!\n"
 	.string "You have to forgive me!$"
 

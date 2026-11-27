@@ -1,10 +1,14 @@
 SlateportCity_OceanicMuseum_2F_MapScripts::
 	.byte 0
 
+@ Pokémon Emerald Champions: TEAM AQUA stole the DEVON GOODS in PETALBURG WOODS, so the player
+@ arrives without them. The grunts come for CAPT. STERN himself, the player beats both back to back
+@ (no healing in between), gets the parts back and returns them. STERN then hands over the LETTER
+@ for STEVEN (Mr. Stone's errand in vanilla). This is the boss of the split before BRAWLY.
 SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	lock
 	faceplayer
-	msgbox SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_2F_Text_PartsWereStolen, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_ENCOUNTER_AQUA, TRUE
 	addobject LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1
@@ -18,7 +22,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	waitmovement 0
 	call_if_eq VAR_FACING, DIR_SOUTH, SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts
 	call_if_eq VAR_FACING, DIR_EAST, SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts
-	msgbox SlateportCity_OceanicMuseum_2F_Text_WellTakeThoseParts, MSGBOX_DEFAULT
+	msgbox SlateportCity_OceanicMuseum_2F_Text_YoureComingWithUs, MSGBOX_DEFAULT
 	call_if_ne VAR_FACING, DIR_EAST, SlateportCity_OceanicMuseum_2F_EventScript_SternFaceGrunts
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternWhoAreYou, MSGBOX_DEFAULT
 	msgbox SlateportCity_OceanicMuseum_2F_Text_WereTeamAqua, MSGBOX_DEFAULT
@@ -42,6 +46,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_MeddlingKid, MSGBOX_DEFAULT
+	giveitem ITEM_DEVON_PARTS
 	closemessage
 	delay 35
 	addobject LOCALID_OCEANIC_MUSEUM_2F_ARCHIE
@@ -68,6 +73,8 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs, MSGBOX_DEFAULT
 	setvar VAR_0x8004, ITEM_DEVON_PARTS
 	call Common_EventScript_PlayerHandedOverTheItem
+	msgbox SlateportCity_OceanicMuseum_2F_Text_SternLetterForSteven, MSGBOX_DEFAULT
+	giveitem ITEM_LETTER
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternIveGotToGo, MSGBOX_DEFAULT
 	closemessage
 	fadescreen FADE_TO_BLACK
@@ -77,14 +84,23 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern::
 	callnative UpdateFollowingPokemon
 	removeobject LOCALID_OCEANIC_MUSEUM_2F_CAPT_STERN
 	setflag FLAG_HIDE_ROUTE_110_TEAM_AQUA
-	call_if_eq VAR_REGISTER_BIRCH_STATE, 0, SlateportCity_OceanicMuseum_2F_EventScript_ReadyRegisterBirch
+	@ Pokémon Emerald Champions: BIRCH's ROUTE 110 scene registers him in the POKéNAV, which the
+	@ player may not have yet. TODO (Rustboro batch): set this up when Mr. Stone gives the POKéNAV.
+	call_if_set FLAG_RECEIVED_POKENAV, SlateportCity_OceanicMuseum_2F_EventScript_TryReadyRegisterBirch
 	setflag FLAG_DELIVERED_DEVON_GOODS
+	@ Pokémon Emerald Champions: the DEVON RESEARCHER stops blocking PETALBURG WOODS.
+	setflag FLAG_HIDE_PETALBURG_WOODS_DEVON_EMPLOYEE
 	clearflag FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE
 	setflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	setvar VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1
 	fadescreen FADE_FROM_BLACK
 	release
 	end
+
+@ Pokémon Emerald Champions
+SlateportCity_OceanicMuseum_2F_EventScript_TryReadyRegisterBirch::
+	call_if_eq VAR_REGISTER_BIRCH_STATE, 0, SlateportCity_OceanicMuseum_2F_EventScript_ReadyRegisterBirch
+	return
 
 SlateportCity_OceanicMuseum_2F_EventScript_ReadyRegisterBirch::
 	setvar VAR_REGISTER_BIRCH_STATE, 1
@@ -268,26 +284,32 @@ SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron3::
 	release
 	end
 
-SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts:
+@ Pokémon Emerald Champions
+SlateportCity_OceanicMuseum_2F_Text_PartsWereStolen:
 	.string "Yes? If you're looking for STERN,\n"
 	.string "that would be me.\p"
-	.string "Ah! Those must be the parts I ordered\n"
-	.string "from MR. STONE of DEVON.\p"
-	.string "Thank you! That's great!\n"
-	.string "We can prepare for our expedition now.$"
+	.string "What's that? TEAM AQUA stole the\n"
+	.string "parts DEVON was sending me?\p"
+	.string "But without those parts, our\n"
+	.string "submarine can't…$"
 
-SlateportCity_OceanicMuseum_2F_Text_WellTakeThoseParts:
-	.string "Hehehe, hold it!\n"
-	.string "We'll take those parts!$"
+@ Pokémon Emerald Champions
+SlateportCity_OceanicMuseum_2F_Text_YoureComingWithUs:
+	.string "Hehehe, there you are,\n"
+	.string "CAPT. STERN!\p"
+	.string "We've got DEVON's parts. Now we\n"
+	.string "just need the guy who can build\l"
+	.string "the sub. You're coming with us!$"
 
 SlateportCity_OceanicMuseum_2F_Text_SternWhoAreYou:
 	.string "CAPT. STERN: Wh-what?\n"
 	.string "Who are you people?$"
 
+@ Pokémon Emerald Champions
 SlateportCity_OceanicMuseum_2F_Text_WereTeamAqua:
 	.string "We're TEAM AQUA!\p"
-	.string "Our BOSS wants those parts!\n"
-	.string "Shut your yap and fork them over!$"
+	.string "Our BOSS wants a submarine of his own!\n"
+	.string "So shut your yap and come quietly!$"
 
 SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat:
 	.string "Awaaaah!\n"
@@ -305,16 +327,19 @@ SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat:
 	.string "What?!\n"
 	.string "I lost, too!$"
 
+@ Pokémon Emerald Champions
 SlateportCity_OceanicMuseum_2F_Text_MeddlingKid:
-	.string "Now what? If we don't get the parts,\n"
-	.string "we're in for it!\p"
+	.string "Now what? No captain, and the kid\n"
+	.string "wants the parts back, too?\p"
 	.string "Arrgh, I didn't count on being meddled\n"
-	.string "with by some meddling kid!$"
+	.string "with by some meddling kid!\p"
+	.string "Fine! Take your stupid parts!$"
 
+@ Pokémon Emerald Champions
 SlateportCity_OceanicMuseum_2F_Text_CameToSeeWhatsTakingSoLong:
 	.string "I came to see what was taking so\n"
-	.string "long to snatch some parts, and you\l"
-	.string "simps are held up by a mere child?$"
+	.string "long to collect one sea captain, and\l"
+	.string "you simps are held up by a mere child?$"
 
 SlateportCity_OceanicMuseum_2F_Text_ArchieWarning:
 	.string "We are TEAM AQUA,\n"
@@ -343,13 +368,24 @@ SlateportCity_OceanicMuseum_2F_Text_ArchieWarning:
 	.string "dearly!\p"
 	.string "And don't you forget it!$"
 
+@ Pokémon Emerald Champions
 SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs:
 	.string "CAPT. STERN: You're…\n"
 	.string "Ah, okay, you're {PLAYER}{KUN}…\p"
 	.string "Anyway, that was a tense situation!\n"
 	.string "Thank you for saving us!\p"
-	.string "Oh, yes, I almost forgot that you\n"
-	.string "even brought the parts from DEVON!$"
+	.string "And you got DEVON's parts back\n"
+	.string "from them, too!$"
+
+@ Pokémon Emerald Champions
+SlateportCity_OceanicMuseum_2F_Text_SternLetterForSteven:
+	.string "CAPT. STERN: Hm? What's this?\p"
+	.string "A LETTER from MR. STONE was packed\n"
+	.string "in with the parts.\p"
+	.string "It's for his son, STEVEN. I hear he's\n"
+	.string "exploring GRANITE CAVE on DEWFORD.\p"
+	.string "Could you deliver it for me? I have to\n"
+	.string "get ready for our expedition.$"
 
 SlateportCity_OceanicMuseum_2F_Text_SternIveGotToGo:
 	.string "CAPT. STERN: Whoops!\n"

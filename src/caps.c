@@ -12,15 +12,17 @@ u32 GetCurrentLevelCap(void)
     // Brawly, Roxanne, Wattson, Norman, Flannery, Winona, Tate & Liza, Juan.
     // Each entry is the cap until that flag is set, so the list follows play order,
     // not badge numbers (Brawly's Knuckle Badge is FLAG_BADGE02_GET, for example).
-    // Decided: 12 for the Route 104 boss, 15 for gym 1, 22 for gym 2, 98 for the Elite Four.
-    // The rest is a draft. A trainer counts once their trainer flag is set (defeated).
+    // Decided: 12 for the first boss, 16 for the Slateport museum, 20 for gym 1, 24 for gym 2,
+    // 98 for the Elite Four. The rest is a draft. A trainer counts once their trainer flag is
+    // set (defeated).
     // Story splits (Mt. Pyre, the hideouts, the post-gym-8 section) will add
     // their own story-flag entries in order.
     static const u32 sLevelCapFlagMap[][2] =
     {
         {TRAINER_FLAGS_START + TRAINER_ROUTE104_BOSS, 12}, // Boss at Mr. Briney's cottage (Route 104)
-        {FLAG_BADGE02_GET, 15}, // Brawly (Knuckle Badge)
-        {FLAG_BADGE01_GET, 22}, // Roxanne (Stone Badge)
+        {TRAINER_FLAGS_START + TRAINER_GRUNT_MUSEUM_2, 16}, // Back-to-back Aqua grunts, Slateport museum
+        {FLAG_BADGE02_GET, 20}, // Brawly (Knuckle Badge)
+        {FLAG_BADGE01_GET, 24}, // Roxanne (Stone Badge)
         {FLAG_BADGE03_GET, 30}, // Wattson (Dynamo Badge)
         {FLAG_BADGE05_GET, 38}, // Norman (Balance Badge)
         {FLAG_BADGE04_GET, 46}, // Flannery (Heat Badge)

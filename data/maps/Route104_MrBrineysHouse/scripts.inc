@@ -22,8 +22,8 @@ Route104_MrBrineysHouse_EventScript_SetBrineyPeekoPos::
 Route104_MrBrineysHouse_EventScript_Briney::
 	lock
 	faceplayer
-	@ Pokémon Emerald Champions: Mr. Briney sails to Dewford from the start (Run & Bun gym order).
-	@ Until Mr. Stone's errands (PokéNav, LETTER, DEVON GOODS), the trips don't move the story.
+	@ Pokémon Emerald Champions: Mr. Briney sails before Mr. Stone's errands (Run & Bun gym order).
+	@ See Route104_MrBrineysHouse_EventScript_EarlySailing.
 	goto_if_unset FLAG_RECEIVED_POKENAV, Route104_MrBrineysHouse_EventScript_EarlySailing
 	call_if_unset FLAG_MR_BRINEY_SAILING_INTRO, Route104_MrBrineysHouse_EventScript_SailingIntro
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_MrBrineysHouse_EventScript_SailBothDeliveries
@@ -87,18 +87,41 @@ Route104_MrBrineysHouse_EventScript_SailToDewford::
 	releaseall
 	end
 
-@ Pokémon Emerald Champions: early trips to Dewford, before the PokéNav.
+@ Pokémon Emerald Champions: early sailing, before the PokéNav.
+@ - Before the PETALBURG WOODS scene he has no reason to sail and points the player to RUSTBORO.
+@ - After TEAM AQUA steals the DEVON GOODS there, the first trip sails past DEWFORD straight to
+@   SLATEPORT (VAR_BOARD_BRINEY_BOAT_STATE 3, see Route104_EventScript_StartSailToSlateport).
+@ - Once CAPT. STERN has the DEVON GOODS back, he sails to DEWFORD.
 Route104_MrBrineysHouse_EventScript_EarlySailing::
-	goto_if_set FLAG_MET_MR_BRINEY_EARLY, Route104_MrBrineysHouse_EventScript_EarlySailAgain
-	setflag FLAG_MET_MR_BRINEY_EARLY
 	@ Track where Mr. Briney is from now on, so whiting out can't strand the player.
 	setvar VAR_BRINEY_LOCATION, 1
-	msgbox Route104_MrBrineysHouse_Text_EarlyIntro, MSGBOX_YESNO
+	goto_if_set FLAG_DELIVERED_DEVON_GOODS, Route104_MrBrineysHouse_EventScript_EarlySailToDewfordPrompt
+	call_if_unset FLAG_MET_MR_BRINEY_EARLY, Route104_MrBrineysHouse_EventScript_EarlyIntro
+	goto_if_eq VAR_PETALBURG_WOODS_STATE, 0, Route104_MrBrineysHouse_EventScript_EarlyGoToRustboro
+	goto_if_set FLAG_TOLD_BRINEY_ABOUT_AQUA, Route104_MrBrineysHouse_EventScript_EarlySailToSlateportPrompt
+	setflag FLAG_TOLD_BRINEY_ABOUT_AQUA
+	msgbox Route104_MrBrineysHouse_Text_TeamAquaWentToSlateport, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route104_MrBrineysHouse_EventScript_EarlyDecline
-	goto Route104_MrBrineysHouse_EventScript_EarlySailToDewford
+	goto Route104_MrBrineysHouse_EventScript_EarlySailToSlateport
 	end
 
-Route104_MrBrineysHouse_EventScript_EarlySailAgain::
+Route104_MrBrineysHouse_EventScript_EarlyIntro::
+	setflag FLAG_MET_MR_BRINEY_EARLY
+	msgbox Route104_MrBrineysHouse_Text_EarlyIntro, MSGBOX_DEFAULT
+	return
+
+Route104_MrBrineysHouse_EventScript_EarlyGoToRustboro::
+	msgbox Route104_MrBrineysHouse_Text_EarlyGoToRustboro, MSGBOX_DEFAULT
+	release
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlySailToSlateportPrompt::
+	msgbox Route104_MrBrineysHouse_Text_EarlySailToSlateport, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route104_MrBrineysHouse_EventScript_EarlyDecline
+	goto Route104_MrBrineysHouse_EventScript_EarlySailToSlateport
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlySailToDewfordPrompt::
 	msgbox Route104_MrBrineysHouse_Text_EarlySailAgain, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route104_MrBrineysHouse_EventScript_EarlyDecline
 	goto Route104_MrBrineysHouse_EventScript_EarlySailToDewford
@@ -107,6 +130,18 @@ Route104_MrBrineysHouse_EventScript_EarlySailAgain::
 Route104_MrBrineysHouse_EventScript_EarlyDecline::
 	msgbox Route104_MrBrineysHouse_Text_EarlyDecline, MSGBOX_DEFAULT
 	release
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlySailToSlateport::
+	msgbox Route104_MrBrineysHouse_Text_SetSailForSlateport, MSGBOX_DEFAULT
+	call EventScript_BackupMrBrineyLocation
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 3
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	warp MAP_ROUTE104, 13, 51
+	waitstate
+	releaseall
 	end
 
 Route104_MrBrineysHouse_EventScript_EarlySailToDewford::
@@ -195,11 +230,37 @@ Route104_MrBrineysHouse_Text_EarlyIntro:
 	.string "MR. BRINEY: Ahoy there!\n"
 	.string "I'm MR. BRINEY, and this is PEEKO.\p"
 	.string "You got past that tough customer\n"
-	.string "on my doorstep? Impressive!\p"
-	.string "You've the look of someone after\n"
-	.string "a GYM BADGE.\p"
-	.string "The DEWFORD GYM is just across\n"
-	.string "the water. Shall I sail you there?$"
+	.string "on my doorstep? Impressive!$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_EarlyGoToRustboro:
+	.string "MR. BRINEY: You've the look of\n"
+	.string "someone after a GYM BADGE.\p"
+	.string "The nearest GYM is in RUSTBORO,\n"
+	.string "north through PETALBURG WOODS.\p"
+	.string "PEEKO and I are staying ashore\n"
+	.string "today. Good luck to you!$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_TeamAquaWentToSlateport:
+	.string "MR. BRINEY: What's that?\n"
+	.string "TEAM AQUA stole a DEVON package?\p"
+	.string "And they're making off to SLATEPORT\n"
+	.string "with it? Those scoundrels!\p"
+	.string "Well, now, that's reason enough to\n"
+	.string "go to sea! We'll catch them yet!\p"
+	.string "Shall we sail straight for SLATEPORT?$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_EarlySailToSlateport:
+	.string "MR. BRINEY: Ahoy!\n"
+	.string "Shall we set sail for SLATEPORT?$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_SetSailForSlateport:
+	.string "MR. BRINEY: SLATEPORT it is, then!\p"
+	.string "Anchors aweigh!\n"
+	.string "PEEKO, we're setting sail, my darling!$"
 
 @ Pokémon Emerald Champions
 Route104_MrBrineysHouse_Text_EarlySailAgain:

@@ -9,7 +9,10 @@ DewfordTown_OnTransition:
 DewfordTown_EventScript_Briney::
 	lock
 	faceplayer
-	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_ReturnToPetalburgPrompt
+	@ Pokémon Emerald Champions: was goto_if_unset FLAG_DELIVERED_STEVEN_LETTER (vanilla made you
+	@ deliver the LETTER before SLATEPORT). Here the player comes from SLATEPORT, meets STEVEN
+	@ whenever they like, and can't sail back to PETALBURG until they have BRAWLY's badge.
+	goto_if_unset FLAG_BADGE02_GET, DewfordTown_EventScript_SlateportOnlyPrompt
 	message DewfordTown_Text_WhereAreWeBound
 	waitmessage
 	multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, FALSE
@@ -40,21 +43,18 @@ DewfordTown_EventScript_CancelSailSelect::
 	release
 	end
 
-DewfordTown_EventScript_ReturnToPetalburgPrompt::
-	@ Pokémon Emerald Champions: on early trips the player has no LETTER yet.
-	checkitem ITEM_LETTER
-	goto_if_eq VAR_RESULT, FALSE, DewfordTown_EventScript_EarlyReturnToPetalburgPrompt
-	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
-	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
+@ Pokémon Emerald Champions
+DewfordTown_EventScript_SlateportOnlyPrompt::
+	msgbox DewfordTown_Text_SlateportOnlyUntilBrawly, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_ChooseSlateport
+	msgbox DewfordTown_Text_JustTellMeWhenYouNeedToSetSail, MSGBOX_DEFAULT
 	release
 	end
 
-@ Pokémon Emerald Champions
-DewfordTown_EventScript_EarlyReturnToPetalburgPrompt::
-	msgbox DewfordTown_Text_EarlySailBackToPetalburg, MSGBOX_YESNO
+DewfordTown_EventScript_ReturnToPetalburgPrompt::
+	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
-	msgbox DewfordTown_Text_JustTellMeWhenYouNeedToSetSail, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
 	release
 	end
 
@@ -673,11 +673,6 @@ DewfordTown_Text_PetalburgWereSettingSail2:
 	.string "Anchors aweigh!\n"
 	.string "PEEKO, we're setting sail, my darling!$"
 
-@ Pokémon Emerald Champions
-DewfordTown_Text_EarlySailBackToPetalburg:
-	.string "MR. BRINEY: Ahoy!\n"
-	.string "Shall we sail back to PETALBURG?$"
-
 DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "MR. BRINEY: Then you go on and deliver\n"
 	.string "the LETTER. I'll be waiting.$"
@@ -706,6 +701,15 @@ DewfordTown_Text_SlateportWereSettingSail:
 DewfordTown_Text_JustTellMeWhenYouNeedToSetSail:
 	.string "MR. BRINEY: You just tell me whenever\n"
 	.string "you need to set sail again!$"
+
+@ Pokémon Emerald Champions
+DewfordTown_Text_SlateportOnlyUntilBrawly:
+	.string "MR. BRINEY: Ahoy!\p"
+	.string "If it's PETALBURG you're after, not\n"
+	.string "just yet! PEEKO's dying to see you\l"
+	.string "earn BRAWLY's BADGE first.\p"
+	.string "But I'll gladly sail you back to\n"
+	.string "SLATEPORT. Shall we set sail?$"
 
 DewfordTown_Text_GettingItchToFish:
 	.string "This is a renowned fishing spot.\n"

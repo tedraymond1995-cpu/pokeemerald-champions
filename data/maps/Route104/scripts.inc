@@ -5,6 +5,7 @@ Route104_MapScripts::
 
 Route104_OnFrame:
 	map_script_2 VAR_BOARD_BRINEY_BOAT_STATE, 1, Route104_EventScript_StartSailToDewford
+	map_script_2 VAR_BOARD_BRINEY_BOAT_STATE, 3, Route104_EventScript_StartSailToSlateport
 	.2byte 0
 
 Route104_EventScript_StartSailToDewford::
@@ -80,8 +81,9 @@ Route104_EventScript_HideWhiteHerbFlorist::
 
 Route104_EventScript_TrySetRivalPos::
 	@ Pokémon Emerald Champions: was goto_if_ge. An early trip back from Dewford leaves this at 2
-	@ before the rival scene here, so only skip while boarding (1).
+	@ before the rival scene here, so only skip while boarding (1 for DEWFORD, 3 for SLATEPORT).
 	goto_if_eq VAR_BOARD_BRINEY_BOAT_STATE, 1, Route104_EventScript_DontSetRivalPos
+	goto_if_eq VAR_BOARD_BRINEY_BOAT_STATE, 3, Route104_EventScript_DontSetRivalPos
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, Route104_EventScript_DontSetRivalPos
 	goto_if_unset FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_DontSetRivalPos
 	setobjectxyperm LOCALID_ROUTE104_RIVAL, 17, 52
@@ -393,6 +395,60 @@ Route104_EventScript_ReceivedBulletSeed::
 Route104_EventScript_Girl2::
 	msgbox Route104_Text_ImNotATrainer, MSGBOX_NPC
 	end
+
+@ Pokémon Emerald Champions: the first trip chases TEAM AQUA past DEWFORD straight to SLATEPORT.
+@ The boat takes the vanilla route to DEWFORD's dock, then the vanilla DEWFORD -> ROUTE 109 route
+@ (Dewford's boat starts from that same dock tile, so the two paths join exactly). The player rides
+@ one tile above the boat on Route 104's route, so they step off two tiles instead of three.
+Route104_EventScript_StartSailToSlateport::
+	lockall
+	setobjectsubpriority LOCALID_ROUTE104_BRINEY, MAP_ROUTE104, 0
+	setobjectsubpriority LOCALID_PLAYER, MAP_ROUTE104, 0
+	applymovement LOCALID_ROUTE104_BRINEY, Route104_Movement_BrineyBoardBoat
+	waitmovement 0
+	removeobject LOCALID_ROUTE104_BRINEY
+	applymovement LOCALID_PLAYER, Route104_Movement_PlayerBoardBoat
+	waitmovement 0
+	hideobjectat LOCALID_PLAYER, MAP_ROUTE104
+	call Common_EventScript_PlayBrineysBoatMusic
+	applymovement LOCALID_ROUTE104_BOAT, Route104_Movement_SailToDewford
+	applymovement LOCALID_PLAYER, Route104_Movement_SailToDewford
+	waitmovement 0
+	msgbox Route104_Text_SailingPastDewford, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_SailToSlateport
+	applymovement LOCALID_ROUTE104_BOAT, DewfordTown_Movement_SailToSlateport, MAP_ROUTE104
+	waitmovement LOCALID_ROUTE104_BOAT, MAP_ROUTE104
+	waitmovement 0
+	call Common_EventScript_StopBrineysBoatMusic
+	showobjectat LOCALID_PLAYER, MAP_ROUTE109
+	applymovement LOCALID_PLAYER, Route104_Movement_PlayerExitBoatSlateport
+	waitmovement 0
+	setobjectxyperm LOCALID_ROUTE109_BRINEY, 21, 26
+	addobject LOCALID_ROUTE109_BRINEY
+	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
+	applymovement LOCALID_ROUTE109_BRINEY, DewfordTown_Movement_BrineyExitBoat
+	waitmovement 0
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	addobject LOCALID_ROUTE109_BOAT
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
+	hideobjectat LOCALID_ROUTE104_BOAT, MAP_ROUTE104
+	msgbox Route104_Text_LandedInSlateportGetGoodsBack, MSGBOX_DEFAULT
+	closemessage
+	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
+	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE104
+	resetobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109
+	copyobjectxytoperm LOCALID_ROUTE109_BRINEY
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 0
+	releaseall
+	end
+
+Route104_Movement_PlayerExitBoatSlateport:
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
 
 Route104_EventScript_SailToDewford::
 	setobjectsubpriority LOCALID_ROUTE104_BRINEY, MAP_ROUTE104, 0
@@ -1233,5 +1289,20 @@ Route104_Text_BossDefeat:
 	.string "Blown clean out of the water!$"
 
 Route104_Text_BossPostBattle:
-	.string "MR. BRINEY's inside. He'll sail you\n"
-	.string "to DEWFORD if you ask him.$"
+	.string "MR. BRINEY's inside. That old sea dog\n"
+	.string "only sets sail for a good reason.$"
+
+@ Pokémon Emerald Champions
+Route104_Text_SailingPastDewford:
+	.string "MR. BRINEY: There's DEWFORD TOWN!\p"
+	.string "We won't be stopping today, though.\n"
+	.string "Full speed ahead to SLATEPORT!$"
+
+@ Pokémon Emerald Champions
+Route104_Text_LandedInSlateportGetGoodsBack:
+	.string "MR. BRINEY: Ahoy! We've made land\n"
+	.string "in SLATEPORT!\p"
+	.string "Those TEAM AQUA scoundrels must be\n"
+	.string "somewhere in town.\p"
+	.string "Go and get those DEVON GOODS back!\n"
+	.string "PEEKO and I will wait right here.$"

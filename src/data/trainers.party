@@ -383,6 +383,8 @@ Carvanha
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+/* Pokémon Emerald Champions: the museum boss before Brawly. Placeholder teams from Run & Bun's
+   museum fight (Master Sheet). The two grunts are fought back to back, with no healing between. */
 === TRAINER_GRUNT_MUSEUM_1 ===
 Name: GRUNT
 Class: Team Aqua
@@ -390,11 +392,33 @@ Pic: Aqua Grunt M
 Gender: Male
 Music: Aqua
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Carvanha
+Murkrow @ Lum Berry
 Level: 15
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Ability: Insomnia
+Nature: Jolly
+- Wing Attack
+- Payback
+- Night Shade
+
+Skrelp @ Black Sludge
+Level: 16
+Ability: Poison Point
+Nature: Timid
+- Water Pulse
+- Acid
+- Protect
+- Toxic
+
+Tirtouga @ Rindo Berry
+Level: 16
+Ability: Solid Rock
+Nature: Sassy
+- Ancient Power
+- Brine
+- Aqua Jet
+- Mud Shot
 
 === TRAINER_GRUNT_MUSEUM_2 ===
 Name: GRUNT
@@ -403,15 +427,34 @@ Pic: Aqua Grunt M
 Gender: Male
 Music: Aqua
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Zubat
-Level: 14
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Mareanie @ Black Sludge
+Level: 16
+Ability: Merciless
+Nature: Calm
+- Venoshock
+- Baneful Bunker
+- Soak
+- Toxic
 
-Carvanha
-Level: 14
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Frillish @ Lum Berry
+Level: 15
+Ability: Cursed Body
+Nature: Bold
+- Hex
+- Water Pulse
+- Shock Wave
+- Recover
+
+Whirlipede @ Rocky Helmet
+Level: 16
+Ability: Speed Boost
+Nature: Sassy
+- Venoshock
+- Poison Tail
+- Pin Missile
+- Rollout
 
 === TRAINER_GRUNT_SPACE_CENTER_1 ===
 Name: GRUNT
