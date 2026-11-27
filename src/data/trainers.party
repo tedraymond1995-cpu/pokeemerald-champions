@@ -16969,3 +16969,22 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+/*
+Pokémon Emerald Champions: new trainer. Hiker in Granite Cave 1F who guards the passage to the
+ladder on the way to Steven (Brawly split). Placeholder team until the Trainers tab has his line-up.
+*/
+=== TRAINER_SILAS ===
+Name: SILAS
+Class: Hiker
+Pic: Hiker
+Gender: Male
+Music: Hiker
+Double Battle: No
+AI: Basic Trainer
+
+Geodude
+Level: 16
+
+Aron
+Level: 16
