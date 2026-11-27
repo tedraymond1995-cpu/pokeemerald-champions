@@ -8,6 +8,7 @@
 #include "item.h"
 #include "item_menu.h"
 #include "main.h"
+#include "new_game.h" // Pokémon Emerald Champions: GetTrainerId, for fixed berry counts
 #include "random.h"
 #include "script_pokemon_util.h"
 #include "sprite.h"
@@ -15,6 +16,14 @@
 #include "text.h"
 #include "constants/event_object_movement.h"
 #include "constants/items.h"
+
+// Pokémon Emerald Champions: finite berries rely on ripe trees never regrowing.
+#if OW_BERRY_FINITE && !OW_BERRY_IMMORTAL
+#error "OW_BERRY_FINITE needs OW_BERRY_IMMORTAL"
+#endif
+#if OW_BERRY_FINITE && (OW_BERRY_TREE_YIELD_MIN > OW_BERRY_TREE_YIELD_MAX || OW_BERRY_TREE_YIELD_MAX > 255)
+#error "OW_BERRY_TREE_YIELD_MIN/MAX must satisfy MIN <= MAX <= 255"
+#endif
 
 static u8 BerryTreeGetNumStagesWatered(struct BerryTree *tree);
 static u8 GetNumStagesWateredByBerryTreeId(u8 id);
@@ -2417,6 +2426,8 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
 
 bool8 IsPlayerFacingEmptyBerryTreePatch(void)
 {
+    if (OW_BERRY_FINITE) // Pokémon Emerald Champions: nothing can be planted, so a berry from the bag is never used on soil
+        return FALSE;
     if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
      && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
         return TRUE;
@@ -2715,8 +2726,26 @@ static u32 GetBerryTreeAge(u8 id, u8 stage)
     return GetBerryInfo(id)->growthDuration * stage / (OW_BERRY_SIX_STAGES ? 6 : 4);
 }
 
+// Pokémon Emerald Champions: with OW_BERRY_FINITE, a ripe tree holds a fixed count between
+// OW_BERRY_TREE_YIELD_MIN and OW_BERRY_TREE_YIELD_MAX. The count is mixed from the tree's ID and the
+// save file's trainer ID, so it never changes during a playthrough, differs between save files,
+// and needs no save space (the tree's own yield field only holds up to 31).
+static u8 GetFiniteBerryTreeYield(u8 id)
+{
+    u32 seed = GetTrainerId(gSaveBlock2Ptr->playerTrainerId) ^ (0x9E3779B9 * (id + 1));
+
+    seed ^= seed >> 16;
+    seed *= 0x7FEB352D;
+    seed ^= seed >> 15;
+    seed *= 0x846CA68B;
+    seed ^= seed >> 16;
+    return OW_BERRY_TREE_YIELD_MIN + seed % (OW_BERRY_TREE_YIELD_MAX - OW_BERRY_TREE_YIELD_MIN + 1);
+}
+
 static u8 GetBerryCountByBerryTreeId(u8 id)
 {
+    if (OW_BERRY_FINITE && gSaveBlock1Ptr->berryTrees[id].stage == BERRY_STAGE_BERRIES) // Pokémon Emerald Champions
+        return GetFiniteBerryTreeYield(id);
     return gSaveBlock1Ptr->berryTrees[id].berryYield;
 }
 

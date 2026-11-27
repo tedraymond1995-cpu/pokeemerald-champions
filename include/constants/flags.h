@@ -61,15 +61,17 @@
 #define FLAG_HONEY_TREE_PETALBURG_WOODS 0x27 // Pokémon Emerald Champions: the Petalburg Woods honey tree was shaken
 #define FLAG_HONEY_TREE_ROUTE_110 0x28 // Pokémon Emerald Champions: the Route 110 honey tree was shaken
 #define FLAG_HONEY_TREE_ROUTE_106 0x29 // Pokémon Emerald Champions: the Route 106 honey tree was shaken
-#define FLAG_UNUSED_0x02A    0x2A // Unused Flag
-#define FLAG_UNUSED_0x02B    0x2B // Unused Flag
-#define FLAG_UNUSED_0x02C    0x2C // Unused Flag
-#define FLAG_UNUSED_0x02D    0x2D // Unused Flag
-#define FLAG_UNUSED_0x02E    0x2E // Unused Flag
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
+// Pokémon Emerald Champions: berries are finite, so the daily berry gifts are one-time.
+// These keep their vanilla names (scripts stay untouched) but live outside the daily flags now.
+#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY 0x2A
+#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY 0x2B
+#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY 0x2C
+#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY 0x2D
+#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY 0x2E
+#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY 0x2F
+#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY 0x30
+#define FLAG_DAILY_BERRY_MASTERS_WIFE 0x31
+#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY 0x32
 #define FLAG_UNUSED_0x033    0x33 // Unused Flag
 #define FLAG_UNUSED_0x034    0x34 // Unused Flag
 #define FLAG_UNUSED_0x035    0x35 // Unused Flag
@@ -1572,7 +1574,7 @@
 // The start and end are byte-aligned because the flags are cleared in byte increments
 #define DAILY_FLAGS_START                           (FLAG_UNUSED_0x91F + (8 - FLAG_UNUSED_0x91F % 8))
 #define FLAG_UNUSED_0x920                           (DAILY_FLAGS_START + 0x0)  // Unused Flag
-#define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
+#define FLAG_UNUSED_0x921                           (DAILY_FLAGS_START + 0x1)  // Pokémon Emerald Champions: was FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY, now one-time (see 0x02A)
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)
 #define FLAG_UNUSED_0x923                           (DAILY_FLAGS_START + 0x3)  // Unused Flag
 #define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag
@@ -1582,14 +1584,14 @@
 #define FLAG_UNUSED_0x928                           (DAILY_FLAGS_START + 0x8)  // Unused Flag
 #define FLAG_UNUSED_0x929                           (DAILY_FLAGS_START + 0x9)  // Unused Flag
 #define FLAG_DAILY_PICKED_LOTO_TICKET               (DAILY_FLAGS_START + 0xA)
-#define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xB)
-#define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xC)
-#define FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY      (DAILY_FLAGS_START + 0xD)
-#define FLAG_DAILY_ROUTE_120_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xE)
-#define FLAG_DAILY_LILYCOVE_RECEIVED_BERRY          (DAILY_FLAGS_START + 0xF)
-#define FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY       (DAILY_FLAGS_START + 0x10)
-#define FLAG_DAILY_BERRY_MASTERS_WIFE               (DAILY_FLAGS_START + 0x11)
-#define FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY        (DAILY_FLAGS_START + 0x12)
+#define FLAG_UNUSED_0x92B                           (DAILY_FLAGS_START + 0xB)  // Pokémon Emerald Champions: was FLAG_DAILY_ROUTE_114_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x92C                           (DAILY_FLAGS_START + 0xC)  // Pokémon Emerald Champions: was FLAG_DAILY_ROUTE_111_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x92D                           (DAILY_FLAGS_START + 0xD)  // Pokémon Emerald Champions: was FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x92E                           (DAILY_FLAGS_START + 0xE)  // Pokémon Emerald Champions: was FLAG_DAILY_ROUTE_120_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x92F                           (DAILY_FLAGS_START + 0xF)  // Pokémon Emerald Champions: was FLAG_DAILY_LILYCOVE_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x930                           (DAILY_FLAGS_START + 0x10) // Pokémon Emerald Champions: was FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x931                           (DAILY_FLAGS_START + 0x11) // Pokémon Emerald Champions: was FLAG_DAILY_BERRY_MASTERS_WIFE, now one-time (see 0x02A)
+#define FLAG_UNUSED_0x932                           (DAILY_FLAGS_START + 0x12) // Pokémon Emerald Champions: was FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY, now one-time (see 0x02A)
 #define FLAG_UNUSED_0x933                           (DAILY_FLAGS_START + 0x13) // Unused Flag
 #define FLAG_DAILY_APPRENTICE_LEAVES                (DAILY_FLAGS_START + 0x14)
 

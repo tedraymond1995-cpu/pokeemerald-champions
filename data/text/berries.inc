@@ -105,8 +105,8 @@ Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop:
 	.string "Let flowers fill the world!$"
 
 Route123_BerryMastersHouse_Text_DoneForToday:
-	.string "I'm done for today.\n"
-	.string "Come again another day.\p"
+	@ Pokémon Emerald Champions: his gift is one-time now, so no "come again another day".
+	.string "I have no more BERRIES to spare.\p"
 	.string "Let flowers fill the world!$"
 
 Route123_BerryMastersHouse_Text_HeardAGoodSayingLately:

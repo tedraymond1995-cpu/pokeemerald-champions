@@ -43,8 +43,13 @@
 #define OW_BERRY_GROWTH_RATE           GEN_3      // Presets for how long each Berry plant takes to grow.
 #define OW_BERRY_YIELD_RATE            GEN_3      // Presets for how many Berries each plant can yield.
 #define OW_BERRY_DRAIN_RATE            GEN_6_ORAS // If OW_BERRY_MOISTURE is enabled, this setting changes how fast the soil dries out. GEN_4 uses a Berry-dependent drain rate, GEN_6_XY dries out in 24 hours (4 hours with the relevant Mulch) and GEN_6_ORAS dries out in 4 hours. Other values are illegal.
-#define OW_BERRY_IMMORTAL              FALSE      // If enabled, once a Berry tree has grown a Berry, the tree will not disappear until picked by the player.
+#define OW_BERRY_IMMORTAL              TRUE       // If enabled, once a Berry tree has grown a Berry, the tree will not disappear until picked by the player. (Pokémon Emerald Champions: on, so ripe trees wait for the player.)
 #define OW_BERRY_COLORS                GEN_6_ORAS // If set to GEN_6_XY or GEN_6_ORAS, the Chesto, Wiki, Bluk, Cornn, Pamtre, Belue, Ganlon, Watmel, Qualot, Spelon, Kasib, Colbur, Lansat, Kee, Payapa, Roseli, Liechi, Enigma, and Maranga will use their colors from the stated game. Other values are illegal.
+
+// Pokémon Emerald Champions: berries are a finite resource.
+#define OW_BERRY_FINITE                TRUE       // Each tree can be picked once: nothing regrows and nothing can be planted. Needs OW_BERRY_IMMORTAL.
+#define OW_BERRY_TREE_YIELD_MIN        66         // With OW_BERRY_FINITE, a ripe tree holds between MIN and MAX berries (MAX 255 at most).
+#define OW_BERRY_TREE_YIELD_MAX        99         // The count is fixed per tree and save file, so it can't be rerolled.
 
 // Overworld Pokémon
 #define OW_POKEMON_OBJECT_EVENTS       TRUE       // Adds Object Event fields for every species. Can be used for NPCs using the OBJ_EVENT_GFX_SPECIES macro (eg. OBJ_EVENT_GFX_SPECIES(BULBASAUR))
