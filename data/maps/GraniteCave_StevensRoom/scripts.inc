@@ -4,6 +4,10 @@ GraniteCave_StevensRoom_MapScripts::
 GraniteCave_StevensRoom_EventScript_Steven::
 	lock
 	faceplayer
+	@ Pokémon Emerald Champions: Brawly comes before Rustboro, so the player can meet Steven
+	@ before Mr. Stone hands over the LETTER. He waits here until it's delivered.
+	checkitem ITEM_LETTER
+	goto_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_StevenNoLetter
 	msgbox GraniteCave_StevensRoom_Text_ImStevenLetterForMe, MSGBOX_DEFAULT
 	setvar VAR_0x8004, ITEM_LETTER
 	call Common_EventScript_PlayerHandedOverTheItem
@@ -28,6 +32,12 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	call_if_eq VAR_FACING, DIR_EAST, GraniteCave_StevensRoom_EventScript_StevenExitWestEast
 	playse SE_EXIT
 	removeobject LOCALID_GRANITE_CAVE_STEVEN
+	release
+	end
+
+@ Pokémon Emerald Champions
+GraniteCave_StevensRoom_EventScript_StevenNoLetter::
+	msgbox GraniteCave_StevensRoom_Text_StevenStudyingStones, MSGBOX_DEFAULT
 	release
 	end
 
@@ -117,3 +127,10 @@ GraniteCave_StevensRoom_Text_OhBagIsFull:
 	.string "Oh, your BAG is full…\n"
 	.string "That's too bad, then.$"
 
+@ Pokémon Emerald Champions
+GraniteCave_StevensRoom_Text_StevenStudyingStones:
+	.string "My name is STEVEN.\p"
+	.string "I'm interested in rare stones,\n"
+	.string "so I travel here and there.\p"
+	.string "This cave is full of them.\n"
+	.string "I'll be here a while yet.$"

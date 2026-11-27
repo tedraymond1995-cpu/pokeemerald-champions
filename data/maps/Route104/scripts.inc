@@ -16,7 +16,57 @@ Route104_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Route104_EventScript_TrySetRivalPos
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
+	call_if_defeated TRAINER_ROUTE104_BOSS, Route104_EventScript_MoveBossAside
 	end
+
+@ Pokémon Emerald Champions: the boss before Brawly blocks Mr. Briney's door until defeated.
+@ Level cap 12 until he's beaten (src/caps.c). His team is a placeholder until it's designed
+@ in the Master Sheet.
+Route104_EventScript_MoveBossAside::
+	setobjectxyperm LOCALID_ROUTE104_BOSS, 19, 51
+	setobjectmovementtype LOCALID_ROUTE104_BOSS, MOVEMENT_TYPE_FACE_LEFT
+	return
+
+Route104_EventScript_Boss::
+	trainerbattle_single TRAINER_ROUTE104_BOSS, Route104_Text_BossIntro, Route104_Text_BossDefeat, Route104_EventScript_BossDefeated
+	msgbox Route104_Text_BossPostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+Route104_EventScript_BossDefeated::
+	msgbox Route104_Text_BossPostBattle, MSGBOX_DEFAULT
+	closemessage
+	@ He ends up at (19, 51), clear of the door and of the rival's later scene.
+	@ If the player talked to him from the right, he walks around them.
+	call_if_eq VAR_FACING, DIR_WEST, Route104_EventScript_BossStepAroundPlayer
+	call_if_ne VAR_FACING, DIR_WEST, Route104_EventScript_BossStepAside
+	copyobjectxytoperm LOCALID_ROUTE104_BOSS
+	release
+	end
+
+Route104_EventScript_BossStepAside::
+	applymovement LOCALID_ROUTE104_BOSS, Route104_Movement_BossStepAside
+	waitmovement 0
+	return
+
+Route104_EventScript_BossStepAroundPlayer::
+	applymovement LOCALID_ROUTE104_BOSS, Route104_Movement_BossStepAroundPlayer
+	waitmovement 0
+	return
+
+Route104_Movement_BossStepAside:
+	walk_right
+	walk_right
+	face_left
+	step_end
+
+Route104_Movement_BossStepAroundPlayer:
+	walk_down
+	walk_right
+	walk_right
+	walk_up
+	face_left
+	step_end
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
 	goto_if_unset FLAG_MET_PRETTY_PETAL_SHOP_OWNER, Route104_EventScript_HideWhiteHerbFlorist
@@ -29,7 +79,9 @@ Route104_EventScript_HideWhiteHerbFlorist::
 	return
 
 Route104_EventScript_TrySetRivalPos::
-	goto_if_ge VAR_BOARD_BRINEY_BOAT_STATE, 1, Route104_EventScript_DontSetRivalPos
+	@ Pokémon Emerald Champions: was goto_if_ge. An early trip back from Dewford leaves this at 2
+	@ before the rival scene here, so only skip while boarding (1).
+	goto_if_eq VAR_BOARD_BRINEY_BOAT_STATE, 1, Route104_EventScript_DontSetRivalPos
 	goto_if_set FLAG_MET_RIVAL_RUSTBORO, Route104_EventScript_DontSetRivalPos
 	goto_if_unset FLAG_REGISTER_RIVAL_POKENAV, Route104_EventScript_DontSetRivalPos
 	setobjectxyperm LOCALID_ROUTE104_RIVAL, 17, 52
@@ -352,6 +404,8 @@ Route104_EventScript_SailToDewford::
 	waitmovement 0
 	hideobjectat LOCALID_PLAYER, MAP_ROUTE104
 	call Common_EventScript_PlayBrineysBoatMusic
+	@ Pokémon Emerald Champions: early trips happen before the PokéNav, so Dad can't call yet.
+	goto_if_unset FLAG_RECEIVED_POKENAV, Route104_EventScript_SailToDewfordNoCall
 	goto_if_set FLAG_ENABLE_NORMAN_MATCH_CALL, Route104_EventScript_SailToDewfordNoCall
 	goto_if_unset FLAG_ENABLE_NORMAN_MATCH_CALL, Route104_EventScript_SailToDewfordDadCalls
 	end
@@ -405,8 +459,11 @@ Route104_EventScript_ArriveInDewford::
 	resetobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
 	copyobjectxytoperm LOCALID_DEWFORD_BRINEY
 	setvar VAR_BOARD_BRINEY_BOAT_STATE, 0
-	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_DeliverLetterReminder
+	@ Pokémon Emerald Champions: early trips happen before the player has the LETTER.
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_LandedInDewford
+	checkitem ITEM_LETTER
+	goto_if_eq VAR_RESULT, FALSE, Route104_EventScript_LandedInDewford
+	goto Route104_EventScript_DeliverLetterReminder
 	end
 
 Route104_EventScript_DeliverLetterReminder::
@@ -1166,3 +1223,15 @@ Route104_Text_BrendanPostBattle:
 	.string "making POKéMON battle.\p"
 	.string "Like MR. BRINEY, it's important to\n"
 	.string "become friends with your POKéMON.$"
+
+@ Pokémon Emerald Champions: placeholder texts for the Route 104 boss.
+Route104_Text_BossIntro:
+	.string "Ahoy! Nobody sees MR. BRINEY\n"
+	.string "without getting past me first!$"
+
+Route104_Text_BossDefeat:
+	.string "Blown clean out of the water!$"
+
+Route104_Text_BossPostBattle:
+	.string "MR. BRINEY's inside. He'll sail you\n"
+	.string "to DEWFORD if you ask him.$"

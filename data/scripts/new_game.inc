@@ -129,8 +129,8 @@ EventScript_ResetAllMapFlags::
 	setflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setflag FLAG_HIDE_RUSTBORO_CITY_SCIENTIST
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_FAT_MAN
-	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
-	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	@ Pokémon Emerald Champions: Mr. Briney and Peeko are home from the start, so he can
+	@ sail the player to Dewford for Brawly (Run & Bun gym order).
 	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY
 	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY

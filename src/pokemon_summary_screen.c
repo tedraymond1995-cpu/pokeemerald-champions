@@ -1756,6 +1756,12 @@ static void Task_HandleInput(u8 taskId)
         {
             ChangePage(taskId, 1);
         }
+        else if (JOY_NEW(L_BUTTON) && sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS && ShouldShowIvEvPrompt())
+        {
+            // Pokémon Emerald Champions: L switches the stats page between stats and IVs.
+            ShowMonSkillsInfo(taskId, IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode));
+            PlaySE(SE_SELECT);
+        }
         else if (JOY_NEW(A_BUTTON))
         {
             if (sMonSummaryScreen->currPageIndex != PSS_PAGE_SKILLS)
@@ -1785,14 +1791,6 @@ static void Task_HandleInput(u8 taskId)
                 {
                     PlaySE(SE_SELECT);
                     SwitchToMoveSelection(taskId);
-                }
-            }
-            if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
-            {
-                if (ShouldShowIvEvPrompt())
-                {
-                    ShowMonSkillsInfo(taskId, IncrementSkillsStatsMode(sMonSummaryScreen->skillsPageMode));
-                    PlaySE(SE_SELECT);
                 }
             }
         }
@@ -4835,7 +4833,17 @@ static inline void ShowUtilityPrompt(s16 mode)
     if (iconXPos < 0)
         iconXPos = 0;
 
-    PrintAOrBButtonIcon(PSS_LABEL_WINDOW_PROMPT_UTILITY, FALSE, iconXPos);
+    if (sMonSummaryScreen->currPageIndex == PSS_PAGE_SKILLS)
+    {
+        // Pokémon Emerald Champions: the stats/IVs toggle is on L, so show the L button.
+        const u8 *lButton = COMPOUND_STRING("{L_BUTTON}");
+        int lXPos = stringXPos - GetStringWidth(FONT_NORMAL, lButton, 0) - 2;
+        PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, lButton, lXPos < 0 ? 0 : lXPos, 1, 0, 0);
+    }
+    else
+    {
+        PrintAOrBButtonIcon(PSS_LABEL_WINDOW_PROMPT_UTILITY, FALSE, iconXPos);
+    }
     PrintTextOnWindow(PSS_LABEL_WINDOW_PROMPT_UTILITY, promptText, stringXPos, 1, 0, 0);
 }
 

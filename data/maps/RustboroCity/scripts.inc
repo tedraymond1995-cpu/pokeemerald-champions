@@ -307,6 +307,9 @@ RustboroCity_EventScript_StolenGoodsScene::
 	clearflag FLAG_HIDE_RUSTURF_TUNNEL_AQUA_GRUNT
 	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	@ Pokémon Emerald Champions: stop tracking Mr. Briney while PEEKO is missing (he sails early
+	@ in this hack); Mr. Stone sets it again after the tunnel, as in vanilla.
+	setvar VAR_BRINEY_LOCATION, 0
 	releaseall
 	end
 

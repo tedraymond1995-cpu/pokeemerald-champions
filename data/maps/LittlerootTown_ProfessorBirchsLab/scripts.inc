@@ -129,6 +129,11 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival::
+	@ Pokémon Emerald Champions: everything needed to catch and route encounters from the start.
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_TakeTheseSupplies, MSGBOX_DEFAULT
+	giveitem ITEM_POKE_BALL, 10
+	giveitem ITEM_REPEL, 10
+	giveitem ITEM_SUPER_ROD
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou, MSGBOX_DEFAULT
 	clearflag FLAG_HIDE_ROUTE_101_BOY
 	setvar VAR_BIRCH_LAB_STATE, 3
@@ -708,6 +713,14 @@ LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival:
 	.string "POKéMON while helping me out.\p"
 	.string "{PLAYER}{KUN}, don't you think it might be\n"
 	.string "a good idea to go see {RIVAL}?$"
+
+@ Pokémon Emerald Champions
+LittlerootTown_ProfessorBirchsLab_Text_TakeTheseSupplies:
+	.string "PROF. BIRCH: Before you go, take\n"
+	.string "these, too.\p"
+	.string "POKé BALLS to catch POKéMON,\n"
+	.string "REPELS to keep wild ones away,\l"
+	.string "and a SUPER ROD for fishing.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
 	.string "PROF. BIRCH: Great!\n"
