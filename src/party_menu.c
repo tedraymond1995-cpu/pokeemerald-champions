@@ -9,6 +9,7 @@
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
 #include "bg.h"
+#include "champions.h"
 #include "contest.h"
 #include "data.h"
 #include "decompress.h"
@@ -5048,8 +5049,10 @@ void Task_AbilityPatch(u8 taskId)
     {
     case 0:
         // Can't use.
+        // Pokémon Emerald Champions: weather and terrain setters stay trainer-only.
         if (GetSpeciesAbility(tSpecies, tAbilityNum) == 0
             || !tSpecies
+            || IsWeatherOrTerrainSetterAbility(GetSpeciesAbility(tSpecies, tAbilityNum))
             )
         {
             gPartyMenuUseExitCallback = FALSE;

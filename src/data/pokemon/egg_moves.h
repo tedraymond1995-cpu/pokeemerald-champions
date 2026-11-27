@@ -20,7 +20,6 @@ static const u16 sBulbasaurEggMoveLearnset[] = {
     MOVE_SLUDGE,
     MOVE_ENDURE,
     MOVE_GIGA_DRAIN,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_BULBASAUR
@@ -169,7 +168,6 @@ static const u16 sPichuEggMoveLearnset[] = {
     MOVE_LUCKY_CHANT,
     MOVE_BESTOW,
     MOVE_DISARMING_VOICE,
-    MOVE_ELECTRIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_2_CROSS_EVOS
@@ -263,7 +261,6 @@ static const u16 sCleffaEggMoveLearnset[] = {
     MOVE_AROMATHERAPY,
     MOVE_STORED_POWER,
     MOVE_TICKLE,
-    MOVE_MISTY_TERRAIN,
     MOVE_HEAL_PULSE,
     MOVE_UNAVAILABLE,
 };
@@ -323,7 +320,6 @@ static const u16 sIgglybuffEggMoveLearnset[] = {
     MOVE_SLEEP_TALK,
     MOVE_CAPTIVATE,
     MOVE_PUNISHMENT,
-    MOVE_MISTY_TERRAIN,
     MOVE_HEAL_PULSE,
     MOVE_UNAVAILABLE,
 };
@@ -385,7 +381,6 @@ static const u16 sParasEggMoveLearnset[] = {
     MOVE_WIDE_GUARD,
     MOVE_ROTOTILLER,
     MOVE_FELL_STINGER,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_PARAS
@@ -594,7 +589,6 @@ static const u16 sAbraEggMoveLearnset[] = {
     MOVE_GUARD_SPLIT,
     MOVE_PSYCHO_SHIFT,
     MOVE_ALLY_SWITCH,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ABRA
@@ -929,7 +923,6 @@ static const u16 sDrowzeeEggMoveLearnset[] = {
     MOVE_SECRET_POWER,
     MOVE_SKILL_SWAP,
     MOVE_POWER_SPLIT,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_DROWZEE
@@ -967,7 +960,6 @@ static const u16 sExeggcuteEggMoveLearnset[] = {
     MOVE_SKILL_SWAP,
     MOVE_NATURAL_GIFT,
     MOVE_BLOCK,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_EXEGGCUTE
@@ -1192,7 +1184,6 @@ static const u16 sMimeJrEggMoveLearnset[] = {
     MOVE_POWER_SPLIT,
     MOVE_MAGIC_ROOM,
     MOVE_ICY_WIND,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_4_CROSS_EVOS
@@ -1209,7 +1200,6 @@ static const u16 sMrMimeEggMoveLearnset[] = {
     MOVE_POWER_SPLIT,
     MOVE_MAGIC_ROOM,
     MOVE_ICY_WIND,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #if P_GALARIAN_FORMS
@@ -1496,7 +1486,6 @@ static const u16 sChikoritaEggMoveLearnset[] = {
     MOVE_BODY_SLAM,
     MOVE_REFRESH,
     MOVE_HEAL_PULSE,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_CHIKORITA
@@ -1686,7 +1675,6 @@ static const u16 sMareepEggMoveLearnset[] = {
     MOVE_AFTER_YOU,
     MOVE_AGILITY,
     MOVE_EERIE_IMPULSE,
-    MOVE_ELECTRIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MAREEP
@@ -1768,7 +1756,6 @@ static const u16 sHoppipEggMoveLearnset[] = {
     MOVE_COTTON_GUARD,
     MOVE_SEED_BOMB,
     MOVE_ENDURE,
-    MOVE_GRASSY_TERRAIN,
     MOVE_STRENGTH_SAP,
     MOVE_UNAVAILABLE,
 };
@@ -1809,7 +1796,6 @@ static const u16 sSunkernEggMoveLearnset[] = {
     MOVE_BIDE,
     MOVE_NATURAL_GIFT,
     MOVE_MORNING_SUN,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SUNKERN
@@ -1926,7 +1912,6 @@ static const u16 sGirafarigEggMoveLearnset[] = {
     MOVE_SKILL_SWAP,
     MOVE_SECRET_POWER,
     MOVE_MEAN_LOOK,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_PSYCHIC_FANGS,
     MOVE_UNAVAILABLE,
 };
@@ -2399,7 +2384,6 @@ static const u16 sTreeckoEggMoveLearnset[] = {
     MOVE_RAZOR_WIND,
     MOVE_BULLET_SEED,
     MOVE_NATURAL_GIFT,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_TREECKO
@@ -2520,7 +2504,6 @@ static const u16 sSeedotEggMoveLearnset[] = {
     MOVE_FOUL_PLAY,
     MOVE_BEAT_UP,
     MOVE_BULLET_SEED,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SEEDOT
@@ -2573,7 +2556,6 @@ static const u16 sRaltsEggMoveLearnset[] = {
     MOVE_ENCORE,
     MOVE_SYNCHRONOISE,
     MOVE_SKILL_SWAP,
-    MOVE_MISTY_TERRAIN,
     MOVE_ALLY_SWITCH,
     MOVE_UNAVAILABLE,
 };
@@ -2745,7 +2727,6 @@ static const u16 sMawileEggMoveLearnset[] = {
     MOVE_CAPTIVATE,
     MOVE_SLAM,
     MOVE_METAL_BURST,
-    MOVE_MISTY_TERRAIN,
     MOVE_SEISMIC_TOSS,
     MOVE_POWER_UP_PUNCH,
     MOVE_UNAVAILABLE,
@@ -3464,7 +3445,6 @@ static const u16 sTurtwigEggMoveLearnset[] = {
     MOVE_SPIT_UP,
     MOVE_EARTH_POWER,
     MOVE_WIDE_GUARD,
-    MOVE_GRASSY_TERRAIN,
     MOVE_HEAVY_SLAM,
     MOVE_UNAVAILABLE,
 };
@@ -3662,7 +3642,6 @@ static const u16 sCherubiEggMoveLearnset[] = {
     MOVE_DEFENSE_CURL,
     MOVE_ROLLOUT,
     MOVE_FLOWER_SHIELD,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_CHERUBI
@@ -3958,7 +3937,6 @@ static const u16 sSnivyEggMoveLearnset[] = {
     MOVE_PURSUIT,
     MOVE_MEAN_LOOK,
     MOVE_TWISTER,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SNIVY
@@ -4255,7 +4233,6 @@ static const u16 sSewaddleEggMoveLearnset[] = {
     MOVE_BATON_PASS,
     MOVE_CAMOUFLAGE,
     MOVE_AIR_SLASH,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SEWADDLE
@@ -4284,7 +4261,6 @@ static const u16 sCottoneeEggMoveLearnset[] = {
     MOVE_SWITCHEROO,
     MOVE_WORRY_SEED,
     MOVE_CAPTIVATE,
-    MOVE_MISTY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_COTTONEE
@@ -4386,7 +4362,6 @@ static const u16 sMaractusEggMoveLearnset[] = {
     MOVE_WOOD_HAMMER,
     MOVE_SPIKES,
     MOVE_GRASS_WHISTLE,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MARACTUS
@@ -4986,7 +4961,6 @@ static const u16 sFennekinEggMoveLearnset[] = {
     MOVE_HYPNOSIS,
     MOVE_HEAT_WAVE,
     MOVE_MAGIC_COAT,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_FENNEKIN
@@ -5057,7 +5031,6 @@ static const u16 sSkiddoEggMoveLearnset[] = {
     MOVE_DEFENSE_CURL,
     MOVE_ROLLOUT,
     MOVE_MILK_DRINK,
-    MOVE_GRASSY_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SKIDDO
@@ -5176,7 +5149,6 @@ static const u16 sHelioptileEggMoveLearnset[] = {
     MOVE_AGILITY,
     MOVE_GLARE,
     MOVE_CAMOUFLAGE,
-    MOVE_ELECTRIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_HELIOPTILE
@@ -5521,7 +5493,6 @@ static const u16 sComfeyEggMoveLearnset[] = {
 static const u16 sOranguruEggMoveLearnset[] = {
     MOVE_EXTRASENSORY,
     MOVE_WONDER_ROOM,
-    MOVE_PSYCHIC_TERRAIN,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ORANGURU
