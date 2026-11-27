@@ -190,11 +190,91 @@ OldaleTown_Movement_Unknown2:
 OldaleTown_EventScript_FootprintsMan::
 	lock
 	faceplayer
+	@ Pokémon Emerald Champions: he gives the Johto starter of the third type.
+	goto_if_unset FLAG_SYS_POKEMON_GET, OldaleTown_EventScript_FootprintsManNoGift
+	goto_if_unset FLAG_RECEIVED_OLDALE_JOHTO_STARTER, OldaleTown_EventScript_OfferJohtoStarter
+OldaleTown_EventScript_FootprintsManNoGift::
 	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_NotBlockingPath
 	msgbox OldaleTown_Text_DiscoveredFootprints, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_FOOTPRINTS_MAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
+	release
+	end
+
+@ Pokémon Emerald Champions: the gift is the Johto starter whose type neither the
+@ player's starter nor the rival's has.
+@ Bulbasaur (rival Tepig) -> Totodile, Charmander (rival Oshawott) -> Chikorita,
+@ Squirtle (rival Snivy) -> Cyndaquil.
+OldaleTown_EventScript_OfferJohtoStarter::
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_TOTODILE
+	call_if_eq VAR_STARTER_MON, 1, OldaleTown_EventScript_SetChikorita
+	call_if_eq VAR_STARTER_MON, 2, OldaleTown_EventScript_SetCyndaquil
+	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
+	msgbox OldaleTown_Text_ThisPokemonKeepsStomping, MSGBOX_DEFAULT
+	showmonpic VAR_TEMP_TRANSFERRED_SPECIES, 10, 3
+	msgbox OldaleTown_Text_WillYouTakeIt, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_DeclineJohtoStarter
+	givemon VAR_TEMP_TRANSFERRED_SPECIES, 5
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, OldaleTown_EventScript_JohtoStarterToParty
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, OldaleTown_EventScript_JohtoStarterToPC
+	hidemonpic
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+OldaleTown_EventScript_SetChikorita::
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_CHIKORITA
+	return
+
+OldaleTown_EventScript_SetCyndaquil::
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_CYNDAQUIL
+	return
+
+OldaleTown_EventScript_DeclineJohtoStarter::
+	hidemonpic
+	msgbox OldaleTown_Text_ComeBackIfYouChangeYourMind, MSGBOX_DEFAULT
+	goto OldaleTown_EventScript_FinishJohtoStarter
+	end
+
+OldaleTown_EventScript_JohtoStarterToParty::
+	call OldaleTown_EventScript_ReceivedJohtoStarterFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_ReceivedJohtoStarter
+	call Common_EventScript_GetGiftMonPartySlot
+	call Common_EventScript_NameReceivedPartyMon
+	goto OldaleTown_EventScript_ReceivedJohtoStarter
+	end
+
+OldaleTown_EventScript_JohtoStarterToPC::
+	call OldaleTown_EventScript_ReceivedJohtoStarterFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_JohtoStarterTransferredToPC
+	call Common_EventScript_NameReceivedBoxMon
+	goto OldaleTown_EventScript_JohtoStarterTransferredToPC
+	end
+
+OldaleTown_EventScript_JohtoStarterTransferredToPC::
+	call Common_EventScript_TransferredToPC
+	goto OldaleTown_EventScript_ReceivedJohtoStarter
+	end
+
+OldaleTown_EventScript_ReceivedJohtoStarterFanfare::
+	hidemonpic
+	playfanfare MUS_OBTAIN_ITEM
+	message OldaleTown_Text_ReceivedJohtoStarter
+	waitmessage
+	waitfanfare
+	return
+
+OldaleTown_EventScript_ReceivedJohtoStarter::
+	setflag FLAG_RECEIVED_OLDALE_JOHTO_STARTER
+	msgbox OldaleTown_Text_TakeGoodCareOfIt, MSGBOX_DEFAULT
+OldaleTown_EventScript_FinishJohtoStarter::
+	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_FinishJohtoStarterRelease
+	closemessage
+	applymovement LOCALID_FOOTPRINTS_MAN, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+OldaleTown_EventScript_FinishJohtoStarterRelease::
 	release
 	end
 
@@ -374,6 +454,35 @@ OldaleTown_Text_DiscoveredFootprints:
 	.string "a rare POKéMON!\p"
 	.string "Wait until I finish sketching\n"
 	.string "them, okay?$"
+
+@ Pokémon Emerald Champions
+OldaleTown_Text_ThisPokemonKeepsStomping:
+	.string "Oh! You got a POKéMON from\n"
+	.string "PROF. BIRCH, didn't you?\p"
+	.string "This {STR_VAR_1} keeps stomping\n"
+	.string "on the footprints I'm sketching!\p"
+	.string "It came all the way from JOHTO,\n"
+	.string "and I think it wants an adventure.$"
+
+@ Pokémon Emerald Champions
+OldaleTown_Text_WillYouTakeIt:
+	.string "Will you take {STR_VAR_1}\n"
+	.string "with you?$"
+
+@ Pokémon Emerald Champions
+OldaleTown_Text_ReceivedJohtoStarter:
+	.string "{PLAYER} received {STR_VAR_1}!$"
+
+@ Pokémon Emerald Champions
+OldaleTown_Text_TakeGoodCareOfIt:
+	.string "Take good care of it!\p"
+	.string "Now I can get back to sketching\n"
+	.string "these footprints.$"
+
+@ Pokémon Emerald Champions
+OldaleTown_Text_ComeBackIfYouChangeYourMind:
+	.string "Oh… Okay.\n"
+	.string "Come back if you change your mind.$"
 
 OldaleTown_Text_FinishedSketchingFootprints:
 	.string "I finished sketching the footprints of\n"

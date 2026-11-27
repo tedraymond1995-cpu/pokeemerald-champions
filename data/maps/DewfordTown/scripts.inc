@@ -41,9 +41,20 @@ DewfordTown_EventScript_CancelSailSelect::
 	end
 
 DewfordTown_EventScript_ReturnToPetalburgPrompt::
+	@ Pokémon Emerald Champions: on early trips the player has no LETTER yet.
+	checkitem ITEM_LETTER
+	goto_if_eq VAR_RESULT, FALSE, DewfordTown_EventScript_EarlyReturnToPetalburgPrompt
 	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
 	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
+	release
+	end
+
+@ Pokémon Emerald Champions
+DewfordTown_EventScript_EarlyReturnToPetalburgPrompt::
+	msgbox DewfordTown_Text_EarlySailBackToPetalburg, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
+	msgbox DewfordTown_Text_JustTellMeWhenYouNeedToSetSail, MSGBOX_DEFAULT
 	release
 	end
 
@@ -661,6 +672,11 @@ DewfordTown_Text_PetalburgWereSettingSail2:
 	.string "MR. BRINEY: PETALBURG it is, then!\p"
 	.string "Anchors aweigh!\n"
 	.string "PEEKO, we're setting sail, my darling!$"
+
+@ Pokémon Emerald Champions
+DewfordTown_Text_EarlySailBackToPetalburg:
+	.string "MR. BRINEY: Ahoy!\n"
+	.string "Shall we sail back to PETALBURG?$"
 
 DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "MR. BRINEY: Then you go on and deliver\n"

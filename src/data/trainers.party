@@ -16877,3 +16877,40 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+/* Pokémon Emerald Champions trainers */
+
+/* Route 104 boss at Mr. Briney's cottage, before Brawly (level cap 12).
+   Placeholder team until it's designed in the Master Sheet. */
+=== TRAINER_ROUTE104_BOSS ===
+Name: BOSS
+Class: Sailor
+Pic: Sailor
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Basic Trainer
+
+Wingull @ Oran Berry
+Level: 11
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+- Water Gun
+- Quick Attack
+- Supersonic
+- Growl
+
+Tentacool
+Level: 11
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+- Acid
+- Wrap
+- Water Gun
+- Poison Sting
+
+Corphish @ Oran Berry
+Level: 12
+IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+- Bubble Beam
+- Taunt
+- Leer
+- Harden

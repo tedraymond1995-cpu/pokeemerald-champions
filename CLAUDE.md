@@ -6,8 +6,9 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 
 - Difficulty matches Run & Bun. The player gets a bit more power (setup moves, customization), and fights are tuned around it.
 - Keep the Emerald world and story feel. Routing forces mandatory trainers; optional trainers are tricky but easier. Use back-to-back battles and gauntlets.
-- Gym order is Run & Bun's: Brawly, Roxanne, Wattson, Norman, Flannery, Winona, Tate & Liza, Juan. Splits follow Run & Bun's too (Brawly, Roxanne, Wattson, Norman, Fallarbor, Flannery, Winona, Mt. Pyre, Hideouts, Tate & Liza, Space Center/Seafloor, Juan, Victory Road).
-- Level caps are hard (no EXP at the cap), listed in play order in `src/caps.c`. Decided: 15 at gym 1, 22 at gym 2, 98 for the Elite Four. The other values are a draft.
+- Gym order is Run & Bun's: Brawly, Roxanne, Wattson, Norman, Flannery, Winona, Tate & Liza, Juan. Splits follow Run & Bun's too (Brawly, Roxanne, Wattson, Norman, Fallarbor, Flannery, Winona, Mt. Pyre, Hideouts, Tate & Liza, Space Center/Seafloor, Juan, Victory Road), plus a first split that ends at the Route 104 boss.
+- Mr. Briney sails to Dewford from the start (before the PokéNav); those early trips don't change story state. The boss in front of his cottage (`TRAINER_ROUTE104_BOSS`) blocks the door until beaten. The Brawly split in the sheet also lists Petalburg Woods, Route 109 and the Slateport Museum; those story beats are still in vanilla order and need moving before Brawly.
+- Level caps are hard (no EXP at the cap), listed in play order in `src/caps.c`. Decided: 12 at the Route 104 boss, 15 at gym 1, 22 at gym 2, 98 for the Elite Four. The other values are a draft.
 - 12 Rare Candies in the whole game, scarce or earned. They can go over the cap (`B_RARE_CANDY_CAP FALSE`): 12 = 6 Pokémon × 2 levels, so saving all of them gives a level 100 team for the E4.
 - No grinding: the Endless Candy (`ITEM_ENDLESS_CANDY`, key item, given at new game) raises a level by one per use, stops at the cap, and is never used up.
 - Heart Scale NPC at Pokémon Centers (move relearning, IV maxing, nature changes), with more Heart Scales than Run & Bun. They are finite rewards, never farmable.
@@ -15,18 +16,20 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 - No EVs anywhere (`EV_CAP_NO_GAIN` plus `B_EV_ITEMS_CAP TRUE`). Trainer parties use no EVs.
 - No weather or terrain for the player: no setter abilities on catchable Pokémon, and setter moves are removed from what the player's Pokémon can learn. Enemies may use them, and some fights start with a permanent field effect (`Starting Status` in `trainers.party`).
 - Affection effects are off (`B_AFFECTION_MECHANICS FALSE`): random survival and crits break planning.
-- Summary screen (`include/config/summary_screen.h`, `contest.h`): IVs shown as numbers (press A on the stats page), no contest moves page, and no free move relearner there, since relearning costs a Heart Scale.
+- Summary screen (`include/config/summary_screen.h`, `contest.h`): IVs shown as numbers (press L on the stats page), no contest moves page, and no free move relearner there, since relearning costs a Heart Scale.
 - Trainer AI follows Run & Bun-style rules that players can read and plan around. Document every rule.
 - A deathless run must stay possible but very hard: every boss keeps at least one deathless line.
 - Keep Run & Bun's ratio of doubles to singles.
 - New content goes in two zones: gyms 1–3 (especially between gyms 1 and 2) and a new section between gym 8 and Victory Road. Later-generation characters appear as bosses. Use Emerald's own tilesets so new areas look native.
 - Full player documentation ("open book"): every trainer, encounter and item.
+- Early encounters: Littleroot has a grass patch, Professor Birch gives 10 Poké Balls, 10 Repels and the Super Rod with the starter, and the Oldale footprints man gives the Johto starter of the third type at level 5 (Totodile, Chikorita or Cyndaquil). Early water areas have placeholder Super Rod tables; later ones still have vanilla late-game levels.
 - Starters are Bulbasaur, Charmander and Squirtle (`src/starter_choose.c`). The rival uses the Gen 5 starters and takes the one that beats the player's: Tepig against Bulbasaur, Oshawott against Charmander, Snivy against Squirtle. The rival trainer IDs keep their vanilla names, which describe the player's pick: `_TREECKO` means the player chose Bulbasaur, `_TORCHIC` means Charmander, `_MUDKIP` means Squirtle.
 
 ## Where things live
 
 - Design source for trainers and encounters: the owner's Google Sheet "Emerald Champions Master Sheet" (Trainers and Encounters tabs, one row per Pokémon). Its ID column names the `trainers.party` entry each row belongs to; one row can name several IDs that share a team (May and Brendan rival variants). The sheet is the source of truth for designed trainers: sync it into `trainers.party` rather than hand-editing those entries.
 - Trainer teams: `src/data/trainers.party` (Showdown export format, documented at the top of the file)
+- New trainers get IDs at the end of `include/constants/opponents.h` (bump `TRAINERS_COUNT_EMERALD`). Only 8 free trainer IDs remain before trainer flags run out (`MAX_TRAINERS_COUNT_EMERALD` 864), so bigger batches need unused vanilla trainers reused or the flag space expanded.
 - Wild encounters: `src/data/wild_encounters.json`
 - Level caps: `src/caps.c`; cap and EV settings: `include/config/caps.h`
 - Battle settings: `include/config/battle.h`; AI flags: `include/constants/battle_ai.h`
@@ -49,7 +52,7 @@ A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `
 
 ## Workflow
 
-- Work on a branch, push it, and open a pull request for the owner to merge.
+- Work on a branch, push it, and open a pull request. The owner has approved Claude merging its own pull requests once the change is in a test build, so merge as you go and say so.
 - After a build, give the owner the ROM to playtest: attach it in chat, and copy it into the build folder on their PC when the desktop app has that folder connected.
 - Never commit ROMs or saves (`*.gba` and `*.sav` are gitignored). Releases ship as `.bps` patches.
 - Keep the RHH credit line in `README.md`.

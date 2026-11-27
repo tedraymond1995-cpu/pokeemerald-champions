@@ -22,6 +22,9 @@ Route104_MrBrineysHouse_EventScript_SetBrineyPeekoPos::
 Route104_MrBrineysHouse_EventScript_Briney::
 	lock
 	faceplayer
+	@ Pokémon Emerald Champions: Mr. Briney sails to Dewford from the start (Run & Bun gym order).
+	@ Until Mr. Stone's errands (PokéNav, LETTER, DEVON GOODS), the trips don't move the story.
+	goto_if_unset FLAG_RECEIVED_POKENAV, Route104_MrBrineysHouse_EventScript_EarlySailing
 	call_if_unset FLAG_MR_BRINEY_SAILING_INTRO, Route104_MrBrineysHouse_EventScript_SailingIntro
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_MrBrineysHouse_EventScript_SailBothDeliveries
 	goto_if_unset FLAG_DELIVERED_DEVON_GOODS, Route104_MrBrineysHouse_EventScript_SailDeliverPackage
@@ -79,6 +82,40 @@ Route104_MrBrineysHouse_EventScript_SailToDewford::
 	setvar VAR_ROUTE104_STATE, 2
 	setflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
 	setflag FLAG_HIDE_ROUTE_104_RIVAL
+	warp MAP_ROUTE104, 13, 51
+	waitstate
+	releaseall
+	end
+
+@ Pokémon Emerald Champions: early trips to Dewford, before the PokéNav.
+Route104_MrBrineysHouse_EventScript_EarlySailing::
+	goto_if_set FLAG_MET_MR_BRINEY_EARLY, Route104_MrBrineysHouse_EventScript_EarlySailAgain
+	setflag FLAG_MET_MR_BRINEY_EARLY
+	@ Track where Mr. Briney is from now on, so whiting out can't strand the player.
+	setvar VAR_BRINEY_LOCATION, 1
+	msgbox Route104_MrBrineysHouse_Text_EarlyIntro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route104_MrBrineysHouse_EventScript_EarlyDecline
+	goto Route104_MrBrineysHouse_EventScript_EarlySailToDewford
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlySailAgain::
+	msgbox Route104_MrBrineysHouse_Text_EarlySailAgain, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route104_MrBrineysHouse_EventScript_EarlyDecline
+	goto Route104_MrBrineysHouse_EventScript_EarlySailToDewford
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlyDecline::
+	msgbox Route104_MrBrineysHouse_Text_EarlyDecline, MSGBOX_DEFAULT
+	release
+	end
+
+Route104_MrBrineysHouse_EventScript_EarlySailToDewford::
+	msgbox Route104_MrBrineysHouse_Text_SetSailForDewford, MSGBOX_DEFAULT
+	call EventScript_BackupMrBrineyLocation
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 1
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	warp MAP_ROUTE104, 13, 51
 	waitstate
 	releaseall
@@ -152,6 +189,27 @@ Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 	.string "Well, PEEKO owes her life to you.\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_EarlyIntro:
+	.string "MR. BRINEY: Ahoy there!\n"
+	.string "I'm MR. BRINEY, and this is PEEKO.\p"
+	.string "You got past that tough customer\n"
+	.string "on my doorstep? Impressive!\p"
+	.string "You've the look of someone after\n"
+	.string "a GYM BADGE.\p"
+	.string "The DEWFORD GYM is just across\n"
+	.string "the water. Shall I sail you there?$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_EarlySailAgain:
+	.string "MR. BRINEY: Ahoy!\n"
+	.string "Shall we set sail for DEWFORD?$"
+
+@ Pokémon Emerald Champions
+Route104_MrBrineysHouse_Text_EarlyDecline:
+	.string "MR. BRINEY: Is that so?\n"
+	.string "Tell me whenever you want to sail!$"
 
 Route104_MrBrineysHouse_Text_Peeko:
 	.string "PEEKO: Pii piihyoro!$"
