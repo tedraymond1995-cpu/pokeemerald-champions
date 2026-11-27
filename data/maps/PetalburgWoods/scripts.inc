@@ -153,8 +153,15 @@ PetalburgWoods_EventScript_ExplainMiracleSeed::
 	release
 	end
 
-PetalburgWoods_EventScript_Sign1::
-	msgbox PetalburgWoods_Text_TrainerTipsExperience, MSGBOX_SIGN
+@ Pokémon Emerald Champions: honey tree (data/scripts/honey_trees.inc).
+PetalburgWoods_EventScript_HoneyTree::
+	lockall
+	goto_if_set FLAG_HONEY_TREE_PETALBURG_WOODS, EventScript_HoneyTreeUsed
+	call EventScript_AskShakeHoneyTree
+	goto_if_eq VAR_RESULT, NO, EventScript_HoneyTreeLeaveAlone
+	setflag FLAG_HONEY_TREE_PETALBURG_WOODS
+	setvar VAR_0x8008, HONEY_TREE_TABLE_SHARED
+	goto EventScript_ShakeHoneyTree
 	end
 
 PetalburgWoods_EventScript_Sign2::
@@ -359,16 +366,6 @@ PetalburgWoods_Text_MiracleSeedExplanation:
 	.string "Besides MIRACLE SEED, I think there are\n"
 	.string "other convenient items for POKéMON\l"
 	.string "to hold.$"
-
-PetalburgWoods_Text_TrainerTipsExperience:
-	.string "TRAINER TIPS\p"
-	.string "Any POKéMON that appears even once\n"
-	.string "in a battle is awarded EXP Points.\p"
-	.string "To raise a weak POKéMON, put it at the\n"
-	.string "left of the team list.\p"
-	.string "As soon as a battle starts, switch it\n"
-	.string "out. It will earn EXP Points without\l"
-	.string "being exposed to any harm.$"
 
 PetalburgWoods_Text_TrainerTipsPP:
 	.string "TRAINER TIPS\p"
