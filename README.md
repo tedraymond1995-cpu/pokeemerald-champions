@@ -28,4 +28,4 @@ Based off RHH's pokeemerald-expansion 1.17.2 https://github.com/rh-hideout/pokee
 
 Built on [pret's pokeemerald](https://github.com/pret/pokeemerald) decompilation. See [CREDITS.md](CREDITS.md) for everyone who contributed to pokeemerald-expansion, and its [README](https://github.com/rh-hideout/pokeemerald-expansion#readme) and [documentation](https://rh-hideout.github.io/pokeemerald-expansion/) for the engine's features.
 
-Inspired by [Pokémon Run & Bun](https://www.pokecommunity.com/threads/pok%C3%A9mon-run-bun-v1-07.493223/) by dekzeh. Route 103's layout, with its Acro Bike rails and Super Rod fisherman, comes from Run & Bun.
+Inspired by [Pokémon Run & Bun](https://www.pokecommunity.com/threads/pok%C3%A9mon-run-bun-v1-07.493223/) by dekzeh. Route 103's layout (with its Acro Bike rails and Super Rod fisherman), the trees on Route 104's south meadow and Route 109's beach chairs come from Run & Bun.
