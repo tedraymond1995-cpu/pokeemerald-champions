@@ -7513,7 +7513,10 @@ static void Cmd_pickup(void)
 
             ability = GetSpeciesAbility(species, GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_ABILITY_NUM));
 
+            // Pokémon Emerald Champions: Pickup finds nothing after a battle unless
+            // B_PICKUP_AFTER_BATTLE is on. The Battle Pyramid keeps its own item finds.
             if (ability == ABILITY_PICKUP
+                && (B_PICKUP_AFTER_BATTLE || isInPyramid)
                 && species != SPECIES_NONE
                 && species != SPECIES_EGG
                 && heldItem == ITEM_NONE

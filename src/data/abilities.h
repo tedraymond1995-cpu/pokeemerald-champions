@@ -426,7 +426,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_PICKUP] =
     {
         .name = _("Pickup"),
-        .description = COMPOUND_STRING("May pick up items."),
+        .description = COMPOUND_STRING("Picks up used items."), // Pokémon Emerald Champions: no items after battle (B_PICKUP_AFTER_BATTLE)
         .aiRating = 1,
     },
 
