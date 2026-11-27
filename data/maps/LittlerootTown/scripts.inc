@@ -245,6 +245,12 @@ LittlerootTown_EventScript_FatMan::
 	msgbox LittlerootTown_Text_CanUsePCToStoreItems, MSGBOX_NPC
 	end
 
+@ Pokémon Emerald Champions: the twins keep the LITTLE GROTTO path shut until the player has
+@ Poké Balls (they're hidden once FLAG_ADVENTURE_STARTED is set, after the Route 103 rival).
+LittlerootTown_EventScript_GrottoTwins::
+	msgbox LittlerootTown_Text_GrottoTwins, MSGBOX_NPC
+	end
+
 LittlerootTown_EventScript_Boy::
 	msgbox LittlerootTown_Text_BirchSpendsDaysInLab, MSGBOX_NPC
 	end
@@ -1014,3 +1020,8 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab:
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
 
+@ Pokémon Emerald Champions
+LittlerootTown_Text_GrottoTwins:
+	.string "There's a secret grotto down here!\p"
+	.string "It's full of wild POKéMON, though.\n"
+	.string "Get some POKé BALLS before you go in!$"
