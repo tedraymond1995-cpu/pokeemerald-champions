@@ -28,6 +28,11 @@
       "map": "MAP_PETALBURG_CITY",
       "offset": 50,
       "direction": "right"
+    },
+    {
+      "map": "MAP_ROUTE104_PETAL_GROTTO",
+      "offset": 12,
+      "direction": "left"
     }
   ],
   "object_events": [
