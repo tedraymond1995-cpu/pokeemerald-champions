@@ -140,6 +140,7 @@ gStdScripts_End::
 	.include "data/maps/SootopolisCity/scripts.inc"
 	.include "data/maps/EverGrandeCity/scripts.inc"
 	.include "data/maps/LittlerootTown/scripts.inc"
+	.include "data/maps/LittlerootTown_Grotto/scripts.inc" @ Pokémon Emerald Champions
 	.include "data/maps/OldaleTown/scripts.inc"
 	.include "data/maps/DewfordTown/scripts.inc"
 	.include "data/maps/LavaridgeTown/scripts.inc"

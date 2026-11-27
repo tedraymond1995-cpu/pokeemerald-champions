@@ -1630,6 +1630,22 @@
       "y": 4,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_SLATEPORT_BATTLE_TENT",
+      "name": "BATTLE TENT",
+      "x": 8,
+      "y": 10,
+      "width": 1,
+      "height": 2
+    },
+    {
+      "id": "MAPSEC_LITTLE_GROTTO",
+      "name": "LITTLE GROTTO",
+      "x": 4,
+      "y": 11,
+      "width": 1,
+      "height": 1
     }
   ]
 }

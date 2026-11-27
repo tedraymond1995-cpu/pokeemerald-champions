@@ -219,6 +219,93 @@ SlateportCity_BattleTentLobby_EventScript_Girl::
 	msgbox SlateportCity_BattleTentLobby_Text_BattleEvenWithoutToughMons, MSGBOX_NPC
 	end
 
+@ Pokémon Emerald Champions: the BATTLE TENT lobby is its own area (MAPSEC_SLATEPORT_BATTLE_TENT),
+@ so this gift doesn't use up SLATEPORT's encounter. EEVEE gets 3 perfect IVs and comes with a
+@ random FIRE, WATER or THUNDER STONE (the other ways to evolve it come later in the game).
+SlateportCity_BattleTentLobby_EventScript_EeveeLady::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECEIVED_TENT_EEVEE, SlateportCity_BattleTentLobby_EventScript_EeveeLadyStone
+	msgbox SlateportCity_BattleTentLobby_Text_GiveEeveeAHome, MSGBOX_DEFAULT
+	showmonpic SPECIES_EEVEE, 10, 3
+	msgbox SlateportCity_BattleTentLobby_Text_WillYouTakeEevee, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_BattleTentLobby_EventScript_EeveeDeclined
+	givemon SPECIES_EEVEE, 10
+	special SetGiftMonPerfectIVs
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, SlateportCity_BattleTentLobby_EventScript_EeveeToParty
+	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, SlateportCity_BattleTentLobby_EventScript_EeveeToPC
+	hidemonpic
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+SlateportCity_BattleTentLobby_EventScript_EeveeToParty::
+	call SlateportCity_BattleTentLobby_EventScript_ReceivedEeveeFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_BattleTentLobby_EventScript_ReceivedEevee
+	call Common_EventScript_GetGiftMonPartySlot
+	call Common_EventScript_NameReceivedPartyMon
+	goto SlateportCity_BattleTentLobby_EventScript_ReceivedEevee
+	end
+
+SlateportCity_BattleTentLobby_EventScript_EeveeToPC::
+	call SlateportCity_BattleTentLobby_EventScript_ReceivedEeveeFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_BattleTentLobby_EventScript_EeveeTransferredToPC
+	call Common_EventScript_NameReceivedBoxMon
+	goto SlateportCity_BattleTentLobby_EventScript_EeveeTransferredToPC
+	end
+
+SlateportCity_BattleTentLobby_EventScript_EeveeTransferredToPC::
+	call Common_EventScript_TransferredToPC
+	goto SlateportCity_BattleTentLobby_EventScript_ReceivedEevee
+	end
+
+SlateportCity_BattleTentLobby_EventScript_ReceivedEeveeFanfare::
+	hidemonpic
+	playfanfare MUS_OBTAIN_ITEM
+	message SlateportCity_BattleTentLobby_Text_ReceivedEevee
+	waitmessage
+	waitfanfare
+	return
+
+SlateportCity_BattleTentLobby_EventScript_ReceivedEevee::
+	setflag FLAG_RECEIVED_TENT_EEVEE
+	goto SlateportCity_BattleTentLobby_EventScript_EeveeLadyStone
+	end
+
+SlateportCity_BattleTentLobby_EventScript_EeveeLadyStone::
+	goto_if_set FLAG_RECEIVED_TENT_EEVEE_STONE, SlateportCity_BattleTentLobby_EventScript_EeveeLadyDone
+	msgbox SlateportCity_BattleTentLobby_Text_TakeThisStone, MSGBOX_DEFAULT
+	random 3
+	setvar VAR_TEMP_1, ITEM_FIRE_STONE
+	call_if_eq VAR_RESULT, 1, SlateportCity_BattleTentLobby_EventScript_SetWaterStone
+	call_if_eq VAR_RESULT, 2, SlateportCity_BattleTentLobby_EventScript_SetThunderStone
+	giveitem VAR_TEMP_1
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_TENT_EEVEE_STONE
+	msgbox SlateportCity_BattleTentLobby_Text_OtherWaysToEvolve, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_BattleTentLobby_EventScript_SetWaterStone::
+	setvar VAR_TEMP_1, ITEM_WATER_STONE
+	return
+
+SlateportCity_BattleTentLobby_EventScript_SetThunderStone::
+	setvar VAR_TEMP_1, ITEM_THUNDER_STONE
+	return
+
+SlateportCity_BattleTentLobby_EventScript_EeveeDeclined::
+	hidemonpic
+	msgbox SlateportCity_BattleTentLobby_Text_EeveeDeclined, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_BattleTentLobby_EventScript_EeveeLadyDone::
+	msgbox SlateportCity_BattleTentLobby_Text_HowsEevee, MSGBOX_DEFAULT
+	release
+	end
+
 SlateportCity_BattleTentLobby_EventScript_Woman::
 	msgbox SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection, MSGBOX_NPC
 	end
@@ -305,3 +392,35 @@ SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection:
 	.string "Wouldn't it be nice if they had more of\n"
 	.string "a selection?$"
 
+@ Pokémon Emerald Champions
+SlateportCity_BattleTentLobby_Text_GiveEeveeAHome:
+	.string "Oh, hello! You're a TRAINER, right?\p"
+	.string "My EEVEE had a little one, but I\n"
+	.string "can't look after them both.$"
+
+SlateportCity_BattleTentLobby_Text_WillYouTakeEevee:
+	.string "Would you give this EEVEE a\n"
+	.string "good home?$"
+
+SlateportCity_BattleTentLobby_Text_ReceivedEevee:
+	.string "{PLAYER} received EEVEE!$"
+
+SlateportCity_BattleTentLobby_Text_TakeThisStone:
+	.string "Here, take this, too.\p"
+	.string "EEVEE evolves when it touches the\n"
+	.string "right kind of stone.$"
+
+SlateportCity_BattleTentLobby_Text_OtherWaysToEvolve:
+	.string "That's not the only way EEVEE can\n"
+	.string "evolve, though.\p"
+	.string "Take your time and choose the one\n"
+	.string "that suits you best!$"
+
+SlateportCity_BattleTentLobby_Text_EeveeDeclined:
+	.string "Oh… That's too bad.\n"
+	.string "Come back if you change your mind.$"
+
+SlateportCity_BattleTentLobby_Text_HowsEevee:
+	.string "How's EEVEE doing?\p"
+	.string "It can evolve in all sorts of ways,\n"
+	.string "you know. Take your time choosing!$"

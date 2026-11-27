@@ -216,6 +216,7 @@ OldaleTown_EventScript_OfferJohtoStarter::
 	msgbox OldaleTown_Text_WillYouTakeIt, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_DeclineJohtoStarter
 	givemon VAR_TEMP_TRANSFERRED_SPECIES, 5
+	special SetGiftMonPerfectIVs @ Pokémon Emerald Champions: 3 perfect IVs
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, OldaleTown_EventScript_JohtoStarterToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, OldaleTown_EventScript_JohtoStarterToPC
 	hidemonpic
@@ -237,7 +238,6 @@ OldaleTown_EventScript_DeclineJohtoStarter::
 	end
 
 OldaleTown_EventScript_JohtoStarterToParty::
-	special SetLastPartyMonPerfectIVs @ Pokémon Emerald Champions: 3 perfect IVs
 	call OldaleTown_EventScript_ReceivedJohtoStarterFanfare
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_ReceivedJohtoStarter
