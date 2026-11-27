@@ -14,6 +14,7 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 - No EVs anywhere (`EV_CAP_NO_GAIN` plus `B_EV_ITEMS_CAP TRUE`). Trainer parties use no EVs.
 - No weather or terrain for the player: no setter abilities on catchable Pokémon, and setter moves are removed from what the player's Pokémon can learn. Enemies may use them, and some fights start with a permanent field effect (`Starting Status` in `trainers.party`).
 - Affection effects are off (`B_AFFECTION_MECHANICS FALSE`): random survival and crits break planning.
+- Summary screen (`include/config/summary_screen.h`, `contest.h`): IVs shown as numbers (press A on the stats page), no contest moves page, and no free move relearner there, since relearning costs a Heart Scale.
 - Trainer AI follows Run & Bun-style rules that players can read and plan around. Document every rule.
 - A deathless run must stay possible but very hard: every boss keeps at least one deathless line.
 - Keep Run & Bun's ratio of doubles to singles.
