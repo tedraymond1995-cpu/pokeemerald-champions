@@ -216,6 +216,7 @@
 #define B_ABILITY_TRIGGER_CHANCE        GEN_LATEST // In Gen4+, Shed Skin, Cute Charm, Flame Body, Static, and Poison Point have a 30% chance to trigger. Previously, it was 1/3.
                                                    // In Gen5+, Effect Spore has an 11% chance to sleep, a 9% chance to poison and a 10% chance to paralyze. In Gen4, Effect Spore has a 30% chance to sleep, poison, or paralyze, each with an equal chance. In Gen3, it's 10%.
 #define B_PICKUP_WILD                   GEN_LATEST // In Gen9+, Pickup allows its user to pick up its own used item at the end of the turn in wild battles.
+#define B_PICKUP_AFTER_BATTLE           FALSE      // Pokémon Emerald Champions: if FALSE, Pickup finds no items after a battle, so Rare Candies, stones and held items stay limited. Its in-battle effect is unchanged.
 #define B_MAGIC_GUARD                   GEN_LATEST // In Gen4 only, Magic Guard ignores immobilization caused by paralysis.
 #define B_BATTLE_BOND                   GEN_LATEST // In Gen9+, Battle Bond raises Attack, Sp. Atk, and Speed by 1 stage, once per battle. Previously, the Pokémon would change into Ash-Greninja.
 #define B_ATE_MULTIPLIER                GEN_LATEST // In Gen7+, -ate Abilities (Aerilate, Galvanize, Normalize, Pixilate, Refrigerate) increase damage by 1.2x. In Gen6 and earlier, it was 1.3x, except Normalize, which had no multiplier.

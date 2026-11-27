@@ -1,5 +1,6 @@
 @ Pokémon Emerald Champions: honey trees.
-@ Each honey tree is a one-time wild encounter that counts as its own area. A tree is a
+@ Each honey tree is a one-time wild encounter that takes its area's encounter: the
+@ player shakes the tree instead of catching in that area's grass or water. A tree is a
 @ sign bg_event on the tree's tiles that runs the tree's own script (in its map's
 @ scripts.inc). That script checks and sets the tree's flag, puts the tree's encounter
 @ table (constants/honey_trees.h) in VAR_0x8008 and goes to EventScript_ShakeHoneyTree.
