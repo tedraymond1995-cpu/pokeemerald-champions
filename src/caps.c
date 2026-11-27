@@ -7,21 +7,24 @@
 
 u32 GetCurrentLevelCap(void)
 {
-    // Pokémon Emerald Champions level caps.
-    // Decided: 15 for gym 1, 22 for gym 2, 98 for the Elite Four.
-    // Everything in between is a draft. The post-gym-8 section will add
-    // its own story-flag entries between FLAG_BADGE08_GET and FLAG_IS_CHAMPION.
+    // Pokémon Emerald Champions level caps, in Run & Bun's gym order:
+    // Brawly, Roxanne, Wattson, Norman, Flannery, Winona, Tate & Liza, Juan.
+    // Each entry is the cap until that flag is set, so the list follows play order,
+    // not badge numbers (Brawly's Knuckle Badge is FLAG_BADGE02_GET, for example).
+    // Decided: 15 for gym 1, 22 for gym 2, 98 for the Elite Four. The rest is a draft.
+    // Story splits (Mt. Pyre, the hideouts, the post-gym-8 section) will add
+    // their own story-flag entries in order.
     static const u32 sLevelCapFlagMap[][2] =
     {
-        {FLAG_BADGE01_GET, 15},
-        {FLAG_BADGE02_GET, 22},
-        {FLAG_BADGE03_GET, 30},
-        {FLAG_BADGE04_GET, 38},
-        {FLAG_BADGE05_GET, 46},
-        {FLAG_BADGE06_GET, 55},
-        {FLAG_BADGE07_GET, 65},
-        {FLAG_BADGE08_GET, 75},
-        {FLAG_IS_CHAMPION, 98},
+        {FLAG_BADGE02_GET, 15}, // Brawly (Knuckle Badge)
+        {FLAG_BADGE01_GET, 22}, // Roxanne (Stone Badge)
+        {FLAG_BADGE03_GET, 30}, // Wattson (Dynamo Badge)
+        {FLAG_BADGE05_GET, 38}, // Norman (Balance Badge)
+        {FLAG_BADGE04_GET, 46}, // Flannery (Heat Badge)
+        {FLAG_BADGE06_GET, 55}, // Winona (Feather Badge)
+        {FLAG_BADGE07_GET, 65}, // Tate & Liza (Mind Badge)
+        {FLAG_BADGE08_GET, 75}, // Juan (Rain Badge)
+        {FLAG_IS_CHAMPION, 98}, // Elite Four and Champion
     };
 
     u32 i;
