@@ -154,6 +154,12 @@ EventSnippet_RevealTrainer::
 	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	return
 
+@ Pokémon Emerald Champions: used instead of EventSnippet_RevealTrainer when the battle
+@ has no trainer object to reveal (battles that start from a trigger tile).
+EventSnippet_SkipRevealTrainer::
+	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
+	return
+
 EventSnippet_PlayTrainerEncounterMusic::
 	special PlayTrainerEncounterMusic
 	return
