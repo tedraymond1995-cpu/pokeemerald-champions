@@ -897,6 +897,10 @@ static bool32 ShouldDisableRandomEncounters(void)
     if (FlagGet(WE_FLAG_NO_ENCOUNTER))
         return TRUE;
 
+    // Pokémon Emerald Champions: Littleroot has grass, so no wild battles before the player has a Pokémon.
+    if (GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES) == SPECIES_NONE)
+        return TRUE;
+
     if (!WE_VANILLA_RANDOM && WE_OW_ENCOUNTERS)
     {
         if (gMapHeader.mapLayoutId == LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && !WE_OWE_BATTLE_PIKE)

@@ -4,8 +4,8 @@ GraniteCave_StevensRoom_MapScripts::
 GraniteCave_StevensRoom_EventScript_Steven::
 	lock
 	faceplayer
-	@ Pokémon Emerald Champions: Brawly comes before Rustboro, so the player can meet Steven
-	@ before Mr. Stone hands over the LETTER. He waits here until it's delivered.
+	@ Pokémon Emerald Champions: BRAWLY comes before RUSTBORO, so the LETTER comes from
+	@ CAPT. STERN in SLATEPORT instead of Mr. Stone. STEVEN waits here until it's delivered.
 	checkitem ITEM_LETTER
 	goto_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_StevenNoLetter
 	msgbox GraniteCave_StevensRoom_Text_ImStevenLetterForMe, MSGBOX_DEFAULT
@@ -15,6 +15,8 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	msgbox GraniteCave_StevensRoom_Text_ThankYouTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM_STEEL_WING
 	call_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_BagFull
+	@ Pokémon Emerald Champions: the player can meet STEVEN before getting a POKéNAV.
+	goto_if_unset FLAG_RECEIVED_POKENAV, GraniteCave_StevensRoom_EventScript_NoPokenav
 	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
 	closemessage
 	delay 30
@@ -24,6 +26,7 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	closemessage
 	delay 30
 	setflag FLAG_REGISTERED_STEVEN_POKENAV
+GraniteCave_StevensRoom_EventScript_StevenLeaves::
 	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
@@ -33,6 +36,14 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	playse SE_EXIT
 	removeobject LOCALID_GRANITE_CAVE_STEVEN
 	release
+	end
+
+@ Pokémon Emerald Champions: no POKéNAV yet, so no registering on screen. STEVEN is still
+@ registered, so he's in the POKéNAV once the player gets one.
+GraniteCave_StevensRoom_EventScript_NoPokenav::
+	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampion, MSGBOX_DEFAULT
+	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	goto GraniteCave_StevensRoom_EventScript_StevenLeaves
 	end
 
 @ Pokémon Emerald Champions
@@ -134,3 +145,11 @@ GraniteCave_StevensRoom_Text_StevenStudyingStones:
 	.string "so I travel here and there.\p"
 	.string "This cave is full of them.\n"
 	.string "I'll be here a while yet.$"
+
+@ Pokémon Emerald Champions
+GraniteCave_StevensRoom_Text_CouldBecomeChampion:
+	.string "STEVEN: Your POKéMON appear quite\n"
+	.string "capable.\p"
+	.string "If you keep training, you could even\n"
+	.string "become the CHAMPION of the POKéMON\l"
+	.string "LEAGUE one day. That's what I think.$"

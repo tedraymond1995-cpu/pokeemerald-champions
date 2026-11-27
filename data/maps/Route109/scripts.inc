@@ -280,10 +280,10 @@ Route109_EventScript_MrBriney::
 	end
 
 Route109_EventScript_HaveNotDeliveredDevonGood::
-	message Route109_Text_BrineySailToDewfordQuestion
-	msgbox Route109_Text_BrineySailToDewfordQuestion, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Route109_EventScript_StayHere
-	goto Route109_EventScript_SailToDewford
+	@ Pokémon Emerald Champions: TEAM AQUA has the DEVON GOODS in SLATEPORT. Mr. Briney won't
+	@ sail until CAPT. STERN has them back (the museum boss comes before BRAWLY).
+	msgbox Route109_Text_BrineyGetGoodsBackFirst, MSGBOX_DEFAULT
+	release
 	end
 
 Route109_EventScript_DeliveredDevonGoods::
@@ -496,6 +496,14 @@ Route109_Text_BrineyDewfordItIs:
 Route109_Text_BrineyDeliverDevonGoods:
 	.string "MR. BRINEY: Then you go on and deliver\n"
 	.string "the DEVON GOODS. I'll be waiting.$"
+
+@ Pokémon Emerald Champions
+Route109_Text_BrineyGetGoodsBackFirst:
+	.string "MR. BRINEY: Ahoy!\n"
+	.string "Any sign of those DEVON GOODS?\p"
+	.string "TEAM AQUA must be somewhere in\n"
+	.string "SLATEPORT. Go and get them back!\p"
+	.string "PEEKO and I will wait right here.$"
 
 DewfordTown_Text_BrineyLandedInSlateport:
 	.string "MR. BRINEY: Ahoy! We've made land in\n"

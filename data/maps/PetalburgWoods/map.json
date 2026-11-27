@@ -44,10 +44,10 @@
     {
       "local_id": "LOCALID_PETALBURG_WOODS_GRUNT",
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 26,
+      "x": 27,
       "y": 17,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -58,15 +58,15 @@
     {
       "local_id": "LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_2",
-      "x": 26,
-      "y": 20,
+      "x": 27,
+      "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "0x0",
+      "script": "PetalburgWoods_EventScript_DevonResearcherWaiting",
       "flag": "FLAG_HIDE_PETALBURG_WOODS_DEVON_EMPLOYEE"
     },
     {
@@ -234,21 +234,12 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 26,
-      "y": 23,
-      "elevation": 3,
-      "var": "VAR_PETALBURG_WOODS_STATE",
-      "var_value": "0",
-      "script": "PetalburgWoods_EventScript_DevonResearcherLeft"
-    },
-    {
-      "type": "trigger",
       "x": 27,
       "y": 23,
       "elevation": 3,
       "var": "VAR_PETALBURG_WOODS_STATE",
       "var_value": "0",
-      "script": "PetalburgWoods_EventScript_DevonResearcherRight"
+      "script": "PetalburgWoods_EventScript_DevonResearcher"
     }
   ],
   "bg_events": [
