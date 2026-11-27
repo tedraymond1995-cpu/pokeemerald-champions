@@ -37,3 +37,22 @@ GraniteCave_1F_Text_ExplainFlash:
 	.string "But, to use it, you need the GYM BADGE\n"
 	.string "from DEWFORD's POKéMON GYM.$"
 
+
+@ Pokémon Emerald Champions: new Hiker on the way to the ladder (route script: 1 trainer in Granite Cave).
+GraniteCave_1F_EventScript_Silas::
+	trainerbattle_single TRAINER_SILAS, GraniteCave_1F_Text_SilasIntro, GraniteCave_1F_Text_SilasDefeat
+	msgbox GraniteCave_1F_Text_SilasPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+GraniteCave_1F_Text_SilasIntro:
+	.string "Looking for STEVEN? He went down\n"
+	.string "that ladder a while back.\p"
+	.string "But nobody gets past me without\n"
+	.string "a battle!$"
+
+GraniteCave_1F_Text_SilasDefeat:
+	.string "Rocked to the core!$"
+
+GraniteCave_1F_Text_SilasPostBattle:
+	.string "This cave goes down a long way.\n"
+	.string "Watch out for the cracked floors.$"
