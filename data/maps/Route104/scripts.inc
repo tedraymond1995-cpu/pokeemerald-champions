@@ -17,57 +17,7 @@ Route104_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Route104_EventScript_TrySetRivalPos
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
-	call_if_defeated TRAINER_ROUTE104_BOSS, Route104_EventScript_MoveBossAside
 	end
-
-@ Pokémon Emerald Champions: the boss before Brawly blocks Mr. Briney's door until defeated.
-@ Level cap 12 until he's beaten (src/caps.c). His team is a placeholder until it's designed
-@ in the Master Sheet.
-Route104_EventScript_MoveBossAside::
-	setobjectxyperm LOCALID_ROUTE104_BOSS, 19, 51
-	setobjectmovementtype LOCALID_ROUTE104_BOSS, MOVEMENT_TYPE_FACE_LEFT
-	return
-
-Route104_EventScript_Boss::
-	trainerbattle_single TRAINER_ROUTE104_BOSS, Route104_Text_BossIntro, Route104_Text_BossDefeat, Route104_EventScript_BossDefeated
-	msgbox Route104_Text_BossPostBattle, MSGBOX_DEFAULT
-	release
-	end
-
-Route104_EventScript_BossDefeated::
-	msgbox Route104_Text_BossPostBattle, MSGBOX_DEFAULT
-	closemessage
-	@ He ends up at (19, 51), clear of the door and of the rival's later scene.
-	@ If the player talked to him from the right, he walks around them.
-	call_if_eq VAR_FACING, DIR_WEST, Route104_EventScript_BossStepAroundPlayer
-	call_if_ne VAR_FACING, DIR_WEST, Route104_EventScript_BossStepAside
-	copyobjectxytoperm LOCALID_ROUTE104_BOSS
-	release
-	end
-
-Route104_EventScript_BossStepAside::
-	applymovement LOCALID_ROUTE104_BOSS, Route104_Movement_BossStepAside
-	waitmovement 0
-	return
-
-Route104_EventScript_BossStepAroundPlayer::
-	applymovement LOCALID_ROUTE104_BOSS, Route104_Movement_BossStepAroundPlayer
-	waitmovement 0
-	return
-
-Route104_Movement_BossStepAside:
-	walk_right
-	walk_right
-	face_left
-	step_end
-
-Route104_Movement_BossStepAroundPlayer:
-	walk_down
-	walk_right
-	walk_right
-	walk_up
-	face_left
-	step_end
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
 	goto_if_unset FLAG_MET_PRETTY_PETAL_SHOP_OWNER, Route104_EventScript_HideWhiteHerbFlorist
@@ -1279,18 +1229,6 @@ Route104_Text_BrendanPostBattle:
 	.string "making POKéMON battle.\p"
 	.string "Like MR. BRINEY, it's important to\n"
 	.string "become friends with your POKéMON.$"
-
-@ Pokémon Emerald Champions: placeholder texts for the Route 104 boss.
-Route104_Text_BossIntro:
-	.string "Ahoy! Nobody sees MR. BRINEY\n"
-	.string "without getting past me first!$"
-
-Route104_Text_BossDefeat:
-	.string "Blown clean out of the water!$"
-
-Route104_Text_BossPostBattle:
-	.string "MR. BRINEY's inside. That old sea dog\n"
-	.string "only sets sail for a good reason.$"
 
 @ Pokémon Emerald Champions
 Route104_Text_SailingPastDewford:

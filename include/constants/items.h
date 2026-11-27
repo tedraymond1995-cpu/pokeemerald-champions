@@ -1054,6 +1054,7 @@ enum __attribute__((packed)) Item
 
 // Pokémon Emerald Champions
     ITEM_ENDLESS_CANDY = 874,
+    ITEM_INFINITE_REPEL = 875,
 
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,

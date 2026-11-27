@@ -54,7 +54,7 @@
 #define FLAG_RECEIVED_OLDALE_JOHTO_STARTER 0x20 // Pokémon Emerald Champions: gift from the Oldale footprints man
 #define FLAG_MET_MR_BRINEY_EARLY 0x21 // Pokémon Emerald Champions: met Mr. Briney before the PokéNav (early sailing)
 #define FLAG_TOLD_BRINEY_ABOUT_AQUA 0x22 // Pokémon Emerald Champions: Mr. Briney knows Team Aqua took the Devon Goods to Slateport
-#define FLAG_UNUSED_0x023    0x23 // Unused Flag
+#define FLAG_INFINITE_REPEL_ON 0x23 // Pokémon Emerald Champions: the Infinite Repel is switched on
 #define FLAG_UNUSED_0x024    0x24 // Unused Flag
 #define FLAG_UNUSED_0x025    0x25 // Unused Flag
 #define FLAG_UNUSED_0x026    0x26 // Unused Flag

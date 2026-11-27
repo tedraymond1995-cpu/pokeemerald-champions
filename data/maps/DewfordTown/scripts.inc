@@ -64,6 +64,12 @@ DewfordTown_EventScript_SailBackToPetalburg::
 	goto DewfordTown_EventScript_SailToPetalburg
 	end
 
+@ Pokémon Emerald Champions: BRAWLY's GYM stays closed until the player has met STEVEN.
+@ This BLACK BELT stands in front of the door and disappears once FLAG_DELIVERED_STEVEN_LETTER is set.
+DewfordTown_EventScript_GymClosedBlackBelt::
+	msgbox DewfordTown_Text_GymClosed, MSGBOX_NPC
+	end
+
 DewfordTown_EventScript_Woman::
 	msgbox DewfordTown_Text_TinyIslandCommunity, MSGBOX_NPC
 	end
@@ -710,6 +716,17 @@ DewfordTown_Text_SlateportOnlyUntilBrawly:
 	.string "earn BRAWLY's BADGE first.\p"
 	.string "But I'll gladly sail you back to\n"
 	.string "SLATEPORT. Shall we set sail?$"
+
+@ Pokémon Emerald Champions
+DewfordTown_Text_GymClosed:
+	.string "Sorry, the GYM's closed right now!\p"
+	.string "BRAWLY's out riding the waves.\n"
+	.string "He'll be back before long.\p"
+	.string "Meanwhile, why not check out\n"
+	.string "GRANITE CAVE, up the beach north\l"
+	.string "of town?\p"
+	.string "Someone's been in there for days,\n"
+	.string "looking for rare stones.$"
 
 DewfordTown_Text_GettingItchToFish:
 	.string "This is a renowned fishing spot.\n"

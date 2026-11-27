@@ -1071,7 +1071,8 @@ bool8 IsWildLevelAllowedByRepel(u8 wildLevel)
 {
     u8 i;
 
-    if (!REPEL_STEP_COUNT)
+    // Pokémon Emerald Champions: the Infinite Repel works like a Repel that never wears off.
+    if (!REPEL_STEP_COUNT && !FlagGet(FLAG_INFINITE_REPEL_ON))
         return TRUE;
 
     for (i = 0; i < PARTY_SIZE; i++)

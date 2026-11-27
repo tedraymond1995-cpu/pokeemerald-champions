@@ -237,6 +237,7 @@ OldaleTown_EventScript_DeclineJohtoStarter::
 	end
 
 OldaleTown_EventScript_JohtoStarterToParty::
+	special SetLastPartyMonPerfectIVs @ Pokémon Emerald Champions: 3 perfect IVs
 	call OldaleTown_EventScript_ReceivedJohtoStarterFanfare
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, OldaleTown_EventScript_ReceivedJohtoStarter
