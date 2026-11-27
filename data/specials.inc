@@ -639,3 +639,10 @@ gSpecials::
 	def_special CheckAddCoins
 	def_special SetGiftMonPerfectIVs @ Pokémon Emerald Champions
 	def_special StartHoneyTreeBattle, waitstate=1 @ Pokémon Emerald Champions
+	def_special PcServices_GetIV @ Pokémon Emerald Champions: Pokémon Center services
+	def_special PcServices_MaxIV @ Pokémon Emerald Champions
+	def_special PcServices_GetNature @ Pokémon Emerald Champions
+	def_special PcServices_BufferNatureName @ Pokémon Emerald Champions
+	def_special PcServices_SetNature @ Pokémon Emerald Champions
+	def_special PcServices_CheckStatus @ Pokémon Emerald Champions
+	def_special PcServices_GiveStatus @ Pokémon Emerald Champions
