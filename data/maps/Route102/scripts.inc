@@ -107,3 +107,14 @@ Route102_Text_RouteSignOldale:
 Route102_Text_RouteSignPetalburg:
 	.string "ROUTE 102\n"
 	.string "{LEFT_ARROW} PETALBURG CITY$"
+
+@ Pokémon Emerald Champions: honey tree (data/scripts/honey_trees.inc).
+Route102_EventScript_HoneyTree::
+	lockall
+	goto_if_set FLAG_HONEY_TREE_ROUTE_102, EventScript_HoneyTreeUsed
+	call EventScript_AskShakeHoneyTree
+	goto_if_eq VAR_RESULT, NO, EventScript_HoneyTreeLeaveAlone
+	setflag FLAG_HONEY_TREE_ROUTE_102
+	setvar VAR_0x8008, HONEY_TREE_TABLE_SHARED
+	goto EventScript_ShakeHoneyTree
+	end

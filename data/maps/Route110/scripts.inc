@@ -987,3 +987,14 @@ Route110_Text_KeepAnEyeOutForRival:
 	.string "Well, I had better get going.\n"
 	.string "See you again, {PLAYER}{KUN}!$"
 
+
+@ Pokémon Emerald Champions: honey tree (data/scripts/honey_trees.inc).
+Route110_EventScript_HoneyTree::
+	lockall
+	goto_if_set FLAG_HONEY_TREE_ROUTE_110, EventScript_HoneyTreeUsed
+	call EventScript_AskShakeHoneyTree
+	goto_if_eq VAR_RESULT, NO, EventScript_HoneyTreeLeaveAlone
+	setflag FLAG_HONEY_TREE_ROUTE_110
+	setvar VAR_0x8008, HONEY_TREE_TABLE_SHARED
+	goto EventScript_ShakeHoneyTree
+	end

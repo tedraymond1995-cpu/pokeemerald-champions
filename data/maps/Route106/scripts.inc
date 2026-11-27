@@ -46,3 +46,14 @@ Route106_Text_TrainerTips:
 	.string "Advice on catching POKéMON with a ROD:\n"
 	.string "Press the A Button if you get a bite.$"
 
+
+@ Pokémon Emerald Champions: honey tree (data/scripts/honey_trees.inc).
+Route106_EventScript_HoneyTree::
+	lockall
+	goto_if_set FLAG_HONEY_TREE_ROUTE_106, EventScript_HoneyTreeUsed
+	call EventScript_AskShakeHoneyTree
+	goto_if_eq VAR_RESULT, NO, EventScript_HoneyTreeLeaveAlone
+	setflag FLAG_HONEY_TREE_ROUTE_106
+	setvar VAR_0x8008, HONEY_TREE_TABLE_SHARED
+	goto EventScript_ShakeHoneyTree
+	end

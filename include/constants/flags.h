@@ -57,10 +57,10 @@
 #define FLAG_INFINITE_REPEL_ON 0x23 // Pokémon Emerald Champions: the Infinite Repel is switched on
 #define FLAG_RECEIVED_TENT_EEVEE 0x24 // Pokémon Emerald Champions: Eevee gift in the Slateport Battle Tent
 #define FLAG_RECEIVED_TENT_EEVEE_STONE 0x25 // Pokémon Emerald Champions: the random stone that comes with it
-#define FLAG_UNUSED_0x026    0x26 // Unused Flag
-#define FLAG_UNUSED_0x027    0x27 // Unused Flag
-#define FLAG_UNUSED_0x028    0x28 // Unused Flag
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
+#define FLAG_HONEY_TREE_ROUTE_102 0x26 // Pokémon Emerald Champions: the Route 102 honey tree was shaken
+#define FLAG_HONEY_TREE_PETALBURG_WOODS 0x27 // Pokémon Emerald Champions: the Petalburg Woods honey tree was shaken
+#define FLAG_HONEY_TREE_ROUTE_110 0x28 // Pokémon Emerald Champions: the Route 110 honey tree was shaken
+#define FLAG_HONEY_TREE_ROUTE_106 0x29 // Pokémon Emerald Champions: the Route 106 honey tree was shaken
 #define FLAG_UNUSED_0x02A    0x2A // Unused Flag
 #define FLAG_UNUSED_0x02B    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag
