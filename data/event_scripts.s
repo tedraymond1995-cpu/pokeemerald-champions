@@ -77,6 +77,8 @@
 #include "constants/speaker_names.h"
 @ Pokémon Emerald Champions: honey tree table IDs
 #include "constants/honey_trees.h"
+@ Pokémon Emerald Champions: Pokémon Center services prices and menu rows
+#include "constants/pokemon_center_services.h"
 	.include "asm/macros.inc"
 	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
@@ -1746,3 +1748,4 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/apricorn_tree.inc"
 	.include "data/scripts/wild_encounter.inc"
 	.include "data/scripts/honey_trees.inc" @ Pokémon Emerald Champions
+	.include "data/scripts/pokemon_center_services.inc" @ Pokémon Emerald Champions
