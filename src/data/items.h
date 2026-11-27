@@ -1969,6 +1969,25 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_RareCandy,
     },
 
+    // Pokémon Emerald Champions: reusable Rare Candy that stops at the level cap.
+    [ITEM_ENDLESS_CANDY] =
+    {
+        .name = ITEM_NAME("Endless Candy"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Raises a Pokémon's\n"
+            "level by one, up to\n"
+            "the level cap."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .sortType = ITEM_TYPE_LEVEL_UP_ITEM,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .effect = gItemEffect_RareCandy,
+        .iconPic = gItemIcon_RareCandy,
+        .iconPalette = gItemIconPalette_RareCandy,
+    },
+
     [ITEM_EXP_CANDY_XS] =
     {
         .name = ITEM_NAME("Exp. Candy XS"),
