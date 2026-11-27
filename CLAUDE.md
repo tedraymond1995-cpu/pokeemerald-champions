@@ -19,6 +19,7 @@ A hardcore Emerald ROM hack in the style of Pokémon Run & Bun, built on RHH's p
 - Keep Run & Bun's ratio of doubles to singles.
 - New content goes in two zones: gyms 1–3 (especially between gyms 1 and 2) and a new section between gym 8 and Victory Road. Later-generation characters appear as bosses. Use Emerald's own tilesets so new areas look native.
 - Full player documentation ("open book"): every trainer, encounter and item.
+- Starters are Bulbasaur, Charmander and Squirtle (`src/starter_choose.c`). The rival trainer IDs keep their vanilla names, which describe the player's pick: `_TREECKO` means the player chose Bulbasaur (rival has the Charmander line), `_TORCHIC` means Charmander (rival has Squirtle), `_MUDKIP` means Squirtle (rival has Bulbasaur).
 
 ## Where things live
 
