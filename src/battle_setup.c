@@ -1222,13 +1222,23 @@ static void BattleSetup_ConfigureApproachingTrainerBattle(TrainerBattleParameter
     return;
 }
 
+// Pokémon Emerald Champions: a scripted battle that starts from a trigger tile (like the
+// Petalburg Woods grunt or the Route 110 rival) has no talked-to object to reveal. Applying
+// the reveal movement to a missing object stops debug builds, so those battles skip it.
+static bool32 IsLastTalkedObjectOnMap(void)
+{
+    u8 objectEventId;
+
+    return !TryGetObjectEventIdByLocalIdAndMap(gSpecialVar_LastTalked, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
+}
+
 static void BattleSetup_ConfigureTrainerBattle(TrainerBattleParameter *battleParams, struct ScriptStack *scrStack)
 {
     SetMapVarsToTrainerA();
 
     PUSH       (EventSnippet_Lock)
     PUSH_IF_SET(EventSnippet_FacePlayer, battleParams->params.facePlayer)
-    PUSH       (EventSnippet_RevealTrainer)
+    PUSH_IF_ELSE(EventSnippet_RevealTrainer, EventSnippet_SkipRevealTrainer, IsLastTalkedObjectOnMap()) // Pokémon Emerald Champions
 
     bool32 isTrainerDefeated = !battleParams->params.skipFlagCheck && GetTrainerFlag();
 

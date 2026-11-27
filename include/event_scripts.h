@@ -45,6 +45,7 @@ extern const u8 EventSnippet_FacePlayer[];
 extern const u8 EventSnippet_StartTrainerApproach[];
 extern const u8 EventSnippet_TryDoNormalTrainerBattle[];
 extern const u8 EventSnippet_RevealTrainer[];
+extern const u8 EventSnippet_SkipRevealTrainer[]; // Pokémon Emerald Champions
 extern const u8 EventSnippet_GetTrainerFlag[];
 extern const u8 EventSnippet_PlayTrainerEncounterMusic[];
 extern const u8 EventSnippet_SetTrainerFacingDirection[];
