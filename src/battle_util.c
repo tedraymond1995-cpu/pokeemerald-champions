@@ -10895,6 +10895,11 @@ bool32 IsBattlerInvalidForSpreadMove(enum BattlerId battlerAtk, enum BattlerId b
 
 bool32 IsAllowedToUseBag(void)
 {
+    // Pokémon Emerald Champions: the bag can't be used in trainer battles (Run & Bun rule).
+    // Tests still use items in trainer battles.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !gTestRunnerEnabled)
+        return FALSE;
+
     switch (VarGet(B_VAR_NO_BAG_USE))
     {
     case NO_BAG_RESTRICTION:

@@ -1014,6 +1014,9 @@ static void CB2_GiveStarter(void)
     *GetVarPointer(VAR_STARTER_MON) = gSpecialVar_Result;
     starterMon = GetStarterPokemon(gSpecialVar_Result);
     ScriptGiveMon(starterMon, 5, ITEM_NONE);
+    // Pokémon Emerald Champions: the starter gets 3 random perfect IVs.
+    SetBoxMonPerfectIVs(&gParties[B_TRAINER_PLAYER][0].box, 3);
+    CalculateMonStats(&gParties[B_TRAINER_PLAYER][0]);
     ResetTasks();
     PlayBattleBGM();
     SetMainCallback2(CB2_StartFirstBattle);

@@ -963,6 +963,30 @@ static void RemoveUsedItem(void)
     }
 }
 
+// Pokémon Emerald Champions: the Infinite Repel is switched on and off, like the Gen 6 Exp. Share.
+void ItemUseOutOfBattle_InfiniteRepel(u8 taskId)
+{
+    static const u8 sText_InfiniteRepelOn[] = _("The Infinite Repel has been turned on.{PAUSE_UNTIL_PRESS}");
+    static const u8 sText_InfiniteRepelOff[] = _("The Infinite Repel has been turned off.{PAUSE_UNTIL_PRESS}");
+    const u8 *text;
+
+    if (FlagGet(FLAG_INFINITE_REPEL_ON))
+    {
+        PlaySE(SE_PC_OFF);
+        text = sText_InfiniteRepelOff;
+    }
+    else
+    {
+        PlaySE(SE_REPEL);
+        text = sText_InfiniteRepelOn;
+    }
+    FlagToggle(FLAG_INFINITE_REPEL_ON);
+    if (!gTasks[taskId].data[2]) // used from the Select button in the overworld
+        DisplayItemMessageOnField(taskId, text, Task_CloseCantUseKeyItemMessage);
+    else
+        DisplayItemMessage(taskId, FONT_NORMAL, text, CloseItemMessage);
+}
+
 void ItemUseOutOfBattle_Repel(u8 taskId)
 {
     if (REPEL_STEP_COUNT == 0)

@@ -19,7 +19,7 @@ u32 GetCurrentLevelCap(void)
     // their own story-flag entries in order.
     static const u32 sLevelCapFlagMap[][2] =
     {
-        {TRAINER_FLAGS_START + TRAINER_ROUTE104_BOSS, 12}, // Boss at Mr. Briney's cottage (Route 104)
+        {TRAINER_FLAGS_START + TRAINER_GRUNT_PETALBURG_WOODS, 12}, // Aqua grunt in Petalburg Woods (first boss)
         {TRAINER_FLAGS_START + TRAINER_GRUNT_MUSEUM_2, 16}, // Back-to-back Aqua grunts, Slateport museum
         {FLAG_BADGE02_GET, 20}, // Brawly (Knuckle Badge)
         {FLAG_BADGE01_GET, 24}, // Roxanne (Stone Badge)

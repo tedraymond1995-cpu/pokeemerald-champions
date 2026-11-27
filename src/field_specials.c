@@ -5766,3 +5766,17 @@ bool8 CheckAddCoins(void)
     else
         return TRUE;
 }
+
+// Pokémon Emerald Champions: gift Pokémon (the Oldale Johto starter, the Slateport Eevee) get
+// 3 random perfect IVs. Call right after a givemon that put the Pokémon in the party.
+void SetLastPartyMonPerfectIVs(void)
+{
+    u32 count = CalculatePlayerPartyCount();
+    struct Pokemon *mon;
+
+    if (count == 0)
+        return;
+    mon = &gParties[B_TRAINER_PLAYER][count - 1];
+    SetBoxMonPerfectIVs(&mon->box, 3);
+    CalculateMonStats(mon);
+}

@@ -228,9 +228,7 @@ Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:
 @ Pokémon Emerald Champions
 Route104_MrBrineysHouse_Text_EarlyIntro:
 	.string "MR. BRINEY: Ahoy there!\n"
-	.string "I'm MR. BRINEY, and this is PEEKO.\p"
-	.string "You got past that tough customer\n"
-	.string "on my doorstep? Impressive!$"
+	.string "I'm MR. BRINEY, and this is PEEKO.$"
 
 @ Pokémon Emerald Champions
 Route104_MrBrineysHouse_Text_EarlyGoToRustboro:

@@ -224,6 +224,8 @@ Taillow
 Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+/* Pokémon Emerald Champions: the first boss (level cap 12), in Petalburg Woods. Placeholder team
+   from Run & Bun's first boss (Master Sheet). */
 === TRAINER_GRUNT_PETALBURG_WOODS ===
 Name: GRUNT
 Class: Team Aqua
@@ -231,11 +233,34 @@ Pic: Aqua Grunt M
 Gender: Male
 Music: Aqua
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Poochyena
-Level: 9
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Carvanha @ Oran Berry
+Level: 11
+Ability: Rough Skin
+Nature: Naive
+- Bite
+- Water Pulse
+- Aqua Jet
+- Poison Fang
+
+Croagunk @ Salac Berry
+Level: 12
+Ability: Poison Touch
+Nature: Hasty
+- Belch
+- Rock Smash
+- Poison Sting
+- Fake Out
+
+Exeggcute @ Oran Berry
+Level: 11
+Ability: Harvest
+Nature: Relaxed
+- Confusion
+- Bullet Seed
+- Leech Seed
+- Stun Spore
 
 === TRAINER_MARCEL ===
 Name: MARCEL
@@ -9560,6 +9585,10 @@ Snivy
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+Mudkip
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_BRENDAN_ROUTE_110_MUDKIP ===
 Name: BRENDAN
 Class: Rival
@@ -9612,6 +9641,10 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint / Force Setup First Turn
 
 Tepig
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Treecko
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -9670,6 +9703,10 @@ Oshawott
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+Torchic
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_BRENDAN_ROUTE_110_TORCHIC ===
 Name: BRENDAN
 Class: Rival
@@ -9722,6 +9759,10 @@ Double Battle: No
 AI: Basic Trainer
 
 Snivy
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Mudkip
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -9780,6 +9821,10 @@ Tepig
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+Treecko
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
 === TRAINER_MAY_ROUTE_110_TREECKO ===
 Name: MAY
 Class: Rival
@@ -9832,6 +9877,10 @@ Double Battle: No
 AI: Basic Trainer
 
 Oshawott
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Torchic
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
@@ -16920,40 +16969,3 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-
-/* Pokémon Emerald Champions trainers */
-
-/* Route 104 boss at Mr. Briney's cottage, before Brawly (level cap 12).
-   Placeholder team until it's designed in the Master Sheet. */
-=== TRAINER_ROUTE104_BOSS ===
-Name: BOSS
-Class: Sailor
-Pic: Sailor
-Gender: Male
-Music: Male
-Double Battle: No
-AI: Basic Trainer
-
-Wingull @ Oran Berry
-Level: 11
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Water Gun
-- Quick Attack
-- Supersonic
-- Growl
-
-Tentacool
-Level: 11
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Acid
-- Wrap
-- Water Gun
-- Poison Sting
-
-Corphish @ Oran Berry
-Level: 12
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
-- Bubble Beam
-- Taunt
-- Leer
-- Harden
