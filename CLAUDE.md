@@ -60,7 +60,7 @@ sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-n
 make -j$(nproc)
 ```
 
-A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `make check` runs the test suite (about 6,500 tests, slow on 2 cores).
+A clean build takes about 8 minutes on 2 cores and produces `pokeemerald.gba`. `make check` runs the test suite (about 5,900 tests, about 45 minutes on 2 cores). Seven upstream tests fail because of this hack's rules and are expected: six in `test/battle/exp.c` (hard level caps stop EXP) and the Embargo EV test in `test/battle/move_effect/embargo.c` (no EVs). Everything else should pass.
 
 ## Workflow
 

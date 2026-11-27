@@ -1995,8 +1995,8 @@ const struct ItemInfo gItemsInfo[] =
         .price = 0,
         .description = COMPOUND_STRING(
             "Keeps weak wild\n"
-            "Pokémon away. Use\n"
-            "it to turn it on/off."),
+            "Pokémon away.\n"
+            "Turn it on or off."),
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
