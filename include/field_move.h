@@ -32,6 +32,10 @@ struct FieldMoveInfo
 extern const struct FieldMoveInfo gFieldMoveInfo[];
 extern const struct FieldMoveUnlock gFieldMoveUnlocks[];
 
+// Pokémon Emerald Champions: HMs work from the bag (OW_HM_FIELD_MOVES_FROM_BAG).
+bool32 PlayerHasHMForFieldMove(enum FieldMove fieldMove);
+u32 GetHMFieldMoveUser(enum FieldMove fieldMove);
+
 static inline bool32 SetUpFieldMove(enum FieldMove fieldMove)
 {
     return gFieldMoveInfo[fieldMove].fieldMoveFunc();

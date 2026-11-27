@@ -7,6 +7,7 @@
 #include "field_control_avatar.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "field_move.h" // Pokémon Emerald Champions
 #include "field_screen_effect.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
@@ -1627,6 +1628,9 @@ bool8 PartyHasMonWithSurf(void)
             if (MonKnowsMove(&gParties[B_TRAINER_PLAYER][i], MOVE_SURF))
                 return TRUE;
         }
+        // Pokémon Emerald Champions: HM Surf in the bag is enough.
+        if (GetHMFieldMoveUser(FIELD_MOVE_SURF) < PARTY_SIZE)
+            return TRUE;
     }
     return FALSE;
 }

@@ -646,3 +646,5 @@ gSpecials::
 	def_special PcServices_SetNature @ Pokémon Emerald Champions
 	def_special PcServices_CheckStatus @ Pokémon Emerald Champions
 	def_special PcServices_GiveStatus @ Pokémon Emerald Champions
+	def_special Playtest_DefeatAllTrainers @ Pokémon Emerald Champions
+	def_special Playtest_SetMaxMoney @ Pokémon Emerald Champions

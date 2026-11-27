@@ -3,9 +3,12 @@
 #include "field_move.h"
 #include "fldeff.h"
 #include "fldeff_misc.h"
+#include "item.h"
 #include "party_menu.h"
+#include "pokemon.h"
 #include "strings.h"
 #include "constants/field_move.h"
+#include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/party_menu.h"
 
@@ -191,3 +194,51 @@ const struct FieldMoveInfo gFieldMoveInfo[FIELD_MOVES_COUNT] =
         .hideIfLocked = TRUE,
     },
 };
+
+// Pokémon Emerald Champions: HMs work from the bag, as in Run & Bun (OW_HM_FIELD_MOVES_FROM_BAG).
+// With the HM in the bag (and the badge for it), no Pokémon needs to know the move.
+static const u16 sFieldMoveHMs[FIELD_MOVES_COUNT] =
+{
+    [FIELD_MOVE_CUT]        = ITEM_HM_CUT,
+    [FIELD_MOVE_FLASH]      = ITEM_HM_FLASH,
+    [FIELD_MOVE_ROCK_SMASH] = ITEM_HM_ROCK_SMASH,
+    [FIELD_MOVE_STRENGTH]   = ITEM_HM_STRENGTH,
+    [FIELD_MOVE_SURF]       = ITEM_HM_SURF,
+    [FIELD_MOVE_FLY]        = ITEM_HM_FLY,
+    [FIELD_MOVE_DIVE]       = ITEM_HM_DIVE,
+    [FIELD_MOVE_WATERFALL]  = ITEM_HM_WATERFALL,
+};
+
+bool32 PlayerHasHMForFieldMove(enum FieldMove fieldMove)
+{
+    if (!OW_HM_FIELD_MOVES_FROM_BAG || fieldMove >= FIELD_MOVES_COUNT || sFieldMoveHMs[fieldMove] == ITEM_NONE)
+        return FALSE;
+    return CheckBagHasItem(sFieldMoveHMs[fieldMove], 1);
+}
+
+// The party slot of the Pokémon that shows up when the player uses an HM from the bag:
+// the first one (not an Egg) that could learn the move, or else the first one that isn't an Egg.
+// PARTY_SIZE if the player doesn't have the HM or has no Pokémon.
+u32 GetHMFieldMoveUser(enum FieldMove fieldMove)
+{
+    u32 i, firstMon = PARTY_SIZE;
+    enum Move move;
+
+    if (!PlayerHasHMForFieldMove(fieldMove))
+        return PARTY_SIZE;
+
+    move = FieldMove_GetMoveId(fieldMove);
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        enum Species species = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_SPECIES);
+        if (species == SPECIES_NONE)
+            break;
+        if (GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_IS_EGG))
+            continue;
+        if (CanLearnTeachableMove(species, move))
+            return i;
+        if (firstMon == PARTY_SIZE)
+            firstMon = i;
+    }
+    return firstMon;
+}
