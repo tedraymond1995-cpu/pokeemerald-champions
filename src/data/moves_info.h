@@ -4619,10 +4619,11 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     [MOVE_THIEF] =
     {
         .name = COMPOUND_STRING("Thief"),
+        // Pokémon Emerald Champions: Thief no longer steals items (as in Run & Bun).
         .description = COMPOUND_STRING(
-            "While attacking, it\n"
-            "steals the foe's held item."),
-        .effect = EFFECT_STEAL_ITEM,
+            "A sneaky attack. It no\n"
+            "longer steals held items."),
+        .effect = EFFECT_HIT,
         .power = B_UPDATED_MOVE_DATA >= GEN_6 ? 60 : 40,
         .type = TYPE_DARK,
         .accuracy = 100,
@@ -9431,12 +9432,13 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     [MOVE_COVET] =
     {
         .name = COMPOUND_STRING("Covet"),
+        // Pokémon Emerald Champions: Covet no longer steals items and is Fairy type (as in Run & Bun).
         .description = COMPOUND_STRING(
-            "Cutely begs to obtain an\n"
-            "item held by the foe."),
-        .effect = EFFECT_STEAL_ITEM,
+            "A cute, pleading attack. It\n"
+            "no longer steals held items."),
+        .effect = EFFECT_HIT,
         .power = B_UPDATED_MOVE_DATA >= GEN_5 ? 60 : 40,
-        .type = TYPE_NORMAL,
+        .type = TYPE_FAIRY,
         .accuracy = 100,
         .pp = B_UPDATED_MOVE_DATA >= GEN_6 ? 25 : 40,
         .target = TARGET_SELECTED,
