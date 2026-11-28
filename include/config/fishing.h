@@ -10,4 +10,6 @@
 #define I_FISHING_PROXIMITY         FALSE      // In XY, bite chance is boosted by the number of adjacent non-surfable tiles next to your fishing line
 #define I_FISHING_TIME_OF_DAY_BOOST FALSE      // In XY, bite chance is boosted during morning and evening
 
+#define I_FISHING_EFFORTLESS        TRUE       // Pokémon Emerald Champions: every cast hooks a Pokémon after three dots, with no button timing. Only a spot with no fishing table gives "Not even a nibble".
+
 #endif // GUARD_CONFIG_FISHING_H

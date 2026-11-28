@@ -211,6 +211,8 @@ static bool32 Fishing_InitDots(struct Task *task)
         task->tDotsRequired = randVal + 4;
     if (task->tDotsRequired >= 10)
         task->tDotsRequired = 10;
+    if (I_FISHING_EFFORTLESS) // Pokémon Emerald Champions: a short, fixed wait
+        task->tDotsRequired = 3;
     return TRUE;
 }
 
@@ -220,7 +222,7 @@ static bool32 Fishing_ShowDots(struct Task *task)
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;
-    if (JOY_NEW(A_BUTTON))
+    if (JOY_NEW(A_BUTTON) && !I_FISHING_EFFORTLESS) // Pokémon Emerald Champions: pressing A early can't lose the catch
     {
         if (!DoesFishingMinigameAllowCancel())
             return FALSE;
@@ -263,6 +265,15 @@ static bool32 Fishing_CheckForBite(struct Task *task)
     if (!DoesCurrentMapHaveFishingMons())
     {
         task->tStep = FISHING_NOT_EVEN_NIBBLE;
+        return TRUE;
+    }
+
+    // Pokémon Emerald Champions: every cast gets a bite and the Pokémon is hooked right away,
+    // without the "Oh! A bite!" timing rounds.
+    if (I_FISHING_EFFORTLESS)
+    {
+        StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingBiteDirectionAnimNum(GetPlayerFacingDirection()));
+        task->tStep = FISHING_MON_ON_HOOK;
         return TRUE;
     }
 

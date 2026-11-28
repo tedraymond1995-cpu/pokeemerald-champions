@@ -11524,6 +11524,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .expYield = (P_UPDATED_EXP_YIELDS >= GEN_5) ? 116 : 110,
         .evYield_Speed = 1,
         .itemCommon = ITEM_HEART_SCALE,
+        .itemRare = ITEM_HEART_SCALE, // Pokémon Emerald Champions: same as the common item, so a wild Luvdisc always holds one
         .genderRatio = PERCENT_FEMALE(75),
         .eggCycles = 20,
         .friendship = STANDARD_FRIENDSHIP,
