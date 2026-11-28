@@ -20,13 +20,10 @@ Route118_OnFrame:
 	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
+@ Pokémon Emerald Champions: the Super Rod is the only rod in the game, so this
+@ fisherman no longer gives a Good Rod. He only talks.
 Route118_EventScript_GoodRodFisherman::
-	lock
-	faceplayer
-	goto_if_set FLAG_RECEIVED_GOOD_ROD, Route118_EventScript_ReceivedGoodRod
-	msgbox Route118_Text_YouAgreeGoodRodIsGood, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route118_EventScript_ReceiveGoodRod
-	goto_if_eq VAR_RESULT, NO, Route118_EventScript_DeclineGoodRod
+	msgbox Route118_Text_FishBiteAllDay, MSGBOX_NPC
 	end
 
 Route118_EventScript_ReceiveGoodRod::
@@ -260,6 +257,12 @@ Route118_Text_StevenQuestions:
 	.string "Of course, it's not any of my business.\p"
 	.string "It would be nice if we were to meet\n"
 	.string "again somewhere.$"
+
+Route118_Text_FishBiteAllDay:
+	.string "Hmm!\n"
+	.string "The fish here bite all day long.\p"
+	.string "Cast a SUPER ROD and see what\n"
+	.string "comes up!$"
 
 Route118_Text_YouAgreeGoodRodIsGood:
 	.string "Hmm!\n"
