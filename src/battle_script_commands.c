@@ -7012,6 +7012,12 @@ static void Cmd_tryswapitems(void)
         {
             gBattlescriptCurrInstr = cmd->failInstr;
         }
+        // Pokémon Emerald Champions: a wild Pokémon's item can't be swapped away from it (B_WILD_ITEMS_NEED_CATCH).
+        // Handing your own item to a wild Pokémon that holds nothing still works.
+        else if (gBattleMons[gBattlerTarget].item != ITEM_NONE && IsWildItemProtected(gBattlerAttacker, gBattlerTarget))
+        {
+            gBattlescriptCurrInstr = cmd->failInstr;
+        }
         // can't swap if two Pokémon don't have an item
         // or if either of them is an enigma berry or a mail
         else if ((gBattleMons[gBattlerAttacker].item == ITEM_NONE && gBattleMons[gBattlerTarget].item == ITEM_NONE)
@@ -11325,7 +11331,8 @@ void BS_TryBestow(void)
         || gBattleMons[gBattlerTarget].item != ITEM_NONE
         || !CanBattlerGetOrLoseItem(gBattlerAttacker, gBattlerTarget, gBattleMons[gBattlerAttacker].item)
         || !CanBattlerGetOrLoseItem(gBattlerTarget, gBattlerAttacker, gBattleMons[gBattlerAttacker].item)
-        || GetBattlerPartyState(gBattlerTarget)->isKnockedOff)
+        || GetBattlerPartyState(gBattlerTarget)->isKnockedOff
+        || IsWildItemProtected(gBattlerTarget, gBattlerAttacker)) // Pokémon Emerald Champions: a wild Pokémon can't hand its item over (B_WILD_ITEMS_NEED_CATCH)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
     }
