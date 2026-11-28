@@ -484,6 +484,7 @@ struct LostItem
     u16 stolen:1;
     u16 restoreAfterBattle:1;
     u16 wildItemPending:1;
+    u16 wasInParty:1; // Pokémon Emerald Champions: the slot held a Pokémon when the battle started (a caught Pokémon's slot did not)
 };
 
 struct BattleVideo {

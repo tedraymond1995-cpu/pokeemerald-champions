@@ -188,6 +188,8 @@ void TryRestoreHeldItems(void);
 void RestoreCaughtWildMonHeldItem(struct Pokemon *mon, enum BattlerId battler);
 struct LostItem *GetLostItemState(enum BattleTrainer trainer, u32 slot);
 bool32 CanStealItem(enum BattlerId battlerStealing, enum BattlerId battlerItem, enum Item item);
+bool32 IsWildItemProtected(enum BattlerId battlerTaking, enum BattlerId battlerItem); // Pokémon Emerald Champions
+void RemoveWildItemsFromPlayerParty(void); // Pokémon Emerald Champions
 void TrySaveExchangedItem(enum BattlerId battler, enum Item stolenItem);
 bool32 IsBattlerAffectedByHazards(enum BattlerId battler, enum HoldEffect holdEffect, bool32 toxicSpikes);
 void SortBattlersByRawSpeed(u8 battlers[]);

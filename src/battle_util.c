@@ -9309,6 +9309,59 @@ void SetItemsToRestoreAfterBattle(enum BattleTrainer trainer, u32 partySlot)
     struct LostItem *lostItem = GetLostItemState(trainer, partySlot);
     lostItem->originalItem = GetMonData(&gParties[trainer][partySlot], MON_DATA_HELD_ITEM);
     lostItem->restoreAfterBattle = B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || B_TRAINERS_KNOCK_OFF_ITEMS;
+    lostItem->wasInParty = GetMonData(&gParties[trainer][partySlot], MON_DATA_SPECIES) != SPECIES_NONE; // Pokémon Emerald Champions
+}
+
+// Pokémon Emerald Champions: with B_WILD_ITEMS_NEED_CATCH, a wild Pokémon's held item only leaves the battle with a catch.
+// TRUE in a wild battle while that rule is on.
+static bool32 AreWildItemsProtected(void)
+{
+    if (!B_WILD_ITEMS_NEED_CATCH)
+        return FALSE;
+
+    // Trainer, link and facility battles all carry one of these flags. Whatever is left is a wild battle.
+    return !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER
+                               | BATTLE_TYPE_LINK
+                               | BATTLE_TYPE_RECORDED_LINK
+                               | BATTLE_TYPE_FRONTIER
+                               | BATTLE_TYPE_EREADER_TRAINER
+                               | BATTLE_TYPE_SECRET_BASE
+                               | BATTLE_TYPE_TRAINER_HILL));
+}
+
+// Pokémon Emerald Champions: TRUE when battlerTaking fights for the player and battlerItem is a wild Pokémon,
+// so battlerTaking may not end up with battlerItem's item.
+bool32 IsWildItemProtected(enum BattlerId battlerTaking, enum BattlerId battlerItem)
+{
+    return AreWildItemsProtected() && IsOnPlayerSide(battlerTaking) && !IsOnPlayerSide(battlerItem);
+}
+
+// Pokémon Emerald Champions: the safety net behind B_WILD_ITEMS_NEED_CATCH, run when a wild battle ends.
+// The moves and abilities that could take a wild Pokémon's item are already blocked during the battle.
+// If anything still left one on the player's Pokémon, it is removed here. A Pokémon keeps the item it brought
+// into the battle, and a Pokémon caught in this battle (its slot was empty at the start) keeps its own item.
+void RemoveWildItemsFromPlayerParty(void)
+{
+    for (u32 partySlot = 0; partySlot < PARTY_SIZE; partySlot++)
+    {
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][partySlot];
+        struct LostItem *lostItem = GetLostItemState(B_TRAINER_PLAYER, partySlot);
+        enum Item heldItem = GetMonData(mon, MON_DATA_HELD_ITEM);
+
+        if (!lostItem->wasInParty || heldItem == ITEM_NONE || heldItem == lostItem->originalItem)
+            continue;
+
+        for (u32 wildSlot = 0; wildSlot < PARTY_SIZE; wildSlot++)
+        {
+            if (heldItem == GetLostItemState(B_TRAINER_OPPONENT_A, wildSlot)->originalItem
+             || heldItem == GetLostItemState(B_TRAINER_OPPONENT_B, wildSlot)->originalItem)
+            {
+                enum Item noItem = ITEM_NONE;
+                SetMonData(mon, MON_DATA_HELD_ITEM, &noItem);
+                break;
+            }
+        }
+    }
 }
 
 void TryRestoreHeldItems(void)
@@ -9338,6 +9391,9 @@ void TryRestoreHeldItems(void)
             SetMonData(&gParties[trainer][partySlot], MON_DATA_HELD_ITEM, &originaItem);
         }
     }
+
+    if (AreWildItemsProtected()) // Pokémon Emerald Champions
+        RemoveWildItemsFromPlayerParty();
 }
 
 void RestoreCaughtWildMonHeldItem(struct Pokemon *mon, enum BattlerId battler)
@@ -9367,6 +9423,10 @@ bool32 CanStealItem(enum BattlerId battlerStealing, enum BattlerId battlerItem, 
     enum BattleSide stealerSide = GetBattlerSide(battlerStealing);
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)
+        return FALSE;
+
+    // Pokémon Emerald Champions: a wild Pokémon keeps its item unless it is caught (B_WILD_ITEMS_NEED_CATCH)
+    if (IsWildItemProtected(battlerStealing, battlerItem))
         return FALSE;
 
     // Check if the battler trying to steal should be able to
@@ -9469,6 +9529,9 @@ bool32 CantPickupItem(u32 _battler)
     enum BattlerId battler = _battler;
     // Used by RandomUniformExcept() for RNG_PICKUP
     if (battler == gBattlerAttacker && (GetConfig(B_PICKUP_WILD) < GEN_9 || gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_LINK)))
+        return TRUE;
+    // Pokémon Emerald Champions: Pickup can't take what a wild Pokémon used up (gBattlerAttacker is the Pickup user)
+    if (IsWildItemProtected(gBattlerAttacker, battler))
         return TRUE;
     return !(IsBattlerAlive(battler) && GetBattlerPartyState(battler)->usedHeldItem && gBattleStruct->battlerState[battler].canPickupItem);
 }
