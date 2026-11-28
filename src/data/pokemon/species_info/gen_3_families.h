@@ -1098,8 +1098,8 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .expYield = 60,
     #endif
         .evYield_Speed = 1,
-        .itemCommon = ITEM_POTION,
-        .itemRare = ITEM_REVIVE,
+        .itemCommon = ITEM_RARE_CANDY, // Pokémon Emerald Champions: a nod to Pickup, which finds nothing after battles in this game
+        .itemRare = ITEM_RARE_CANDY, // Pokémon Emerald Champions: same as the common item, so a wild Zigzagoon always holds one
         .genderRatio = PERCENT_FEMALE(50),
         .eggCycles = 15,
         .friendship = STANDARD_FRIENDSHIP,
