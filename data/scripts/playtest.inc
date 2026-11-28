@@ -5,7 +5,7 @@
 @ test can run it too. Object flags only show on the next map load.
 @
 @ What it gives: all 8 badges and all 8 HMs, every trainer marked as beaten, every town on the
-@ FLY map, both bikes, all rods, a level 100 team, and the story counted as done up to Wattson
+@ FLY map, both bikes, the Super Rod, a level 100 team, and the story counted as done up to Wattson
 @ in this hack's order (the intro, the woods theft, the museum, the LETTER for STEVEN, Petalburg's
 @ first visit, the Route 110 rival, Wally in Mauville). Later story scenes are vanilla and untouched.
 Playtest_EventScript_Setup::
@@ -157,11 +157,7 @@ Playtest_EventScript_Setup::
 	additem ITEM_MACH_BIKE
 	additem ITEM_ACRO_BIKE
 	setflag FLAG_RECEIVED_BIKE
-	additem ITEM_OLD_ROD
-	additem ITEM_GOOD_ROD
 	additem ITEM_SUPER_ROD
-	setflag FLAG_RECEIVED_OLD_ROD
-	setflag FLAG_RECEIVED_GOOD_ROD
 	setflag FLAG_RECEIVED_SUPER_ROD
 	additem ITEM_GO_GOGGLES
 	setflag FLAG_RECEIVED_GO_GOGGLES

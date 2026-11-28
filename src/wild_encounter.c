@@ -318,54 +318,46 @@ u32 ChooseWildMonIndex_Rocks(void)
 }
 
 // NUM_FISHING_MONS_ENCOUNTER_SLOTS
+// Pokémon Emerald Champions: the Super Rod is the only rod in the game, so each area has one
+// fishing table that uses every fishing slot, with the same odds layout as land encounters.
+// The rod no longer picks its own group of slots.
+STATIC_ASSERT(NUM_FISHING_MONS_ENCOUNTER_SLOTS == 12, FishingSlotCeilingsMatchSlotCount);
+static const u8 sFishingSlotCeilings[NUM_FISHING_MONS_ENCOUNTER_SLOTS] =
+{
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_0,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_1,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_2,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_3,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_4,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_5,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_6,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_7,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_8,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_9,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_10,
+    ENCOUNTER_CHANCE_FISHING_MONS_SLOT_11,
+};
+
+// Returns the fishing slot for a roll from 0 to ENCOUNTER_CHANCE_FISHING_MONS_TOTAL - 1.
+u32 GetFishingSlotFromRoll(u32 roll)
+{
+    u32 i;
+
+    for (i = 0; i < NUM_FISHING_MONS_ENCOUNTER_SLOTS - 1; i++)
+    {
+        if (roll < sFishingSlotCeilings[i])
+            break;
+    }
+    return i;
+}
+
 static u32 ChooseWildMonIndex_Fishing(u8 rod)
 {
-    u8 wildMonIndex = 0;
-    bool8 swap = FALSE;
-    u8 rand = Random() % max(max(ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_TOTAL, ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_TOTAL),
-                             ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_TOTAL);
+    u32 wildMonIndex = GetFishingSlotFromRoll(Random() % ENCOUNTER_CHANCE_FISHING_MONS_TOTAL);
 
     if (LURE_STEP_COUNT != 0 && (Random() % 10 < 2))
-        swap = TRUE;
+        wildMonIndex = NUM_FISHING_MONS_ENCOUNTER_SLOTS - 1 - wildMonIndex;
 
-    switch (rod)
-    {
-    case OLD_ROD:
-        if (rand < ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_0)
-            wildMonIndex = 0;
-        else
-            wildMonIndex = 1;
-
-        if (swap)
-            wildMonIndex = 1 - wildMonIndex;
-        break;
-    case GOOD_ROD:
-        if (rand < ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_2)
-            wildMonIndex = 2;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_2 && rand < ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_3)
-            wildMonIndex = 3;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_3 && rand < ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_4)
-            wildMonIndex = 4;
-
-        if (swap)
-            wildMonIndex = 6 - wildMonIndex;
-        break;
-    case SUPER_ROD:
-        if (rand < ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_5)
-            wildMonIndex = 5;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_5 && rand < ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_6)
-            wildMonIndex = 6;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_6 && rand < ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_7)
-            wildMonIndex = 7;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_7 && rand < ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_8)
-            wildMonIndex = 8;
-        if (rand >= ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_8 && rand < ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_9)
-            wildMonIndex = 9;
-
-        if (swap)
-            wildMonIndex = 14 - wildMonIndex;
-        break;
-    }
     return wildMonIndex;
 }
 
@@ -582,7 +574,8 @@ bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, enum WildPok
     return TRUE;
 }
 
-static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
+// Pokémon Emerald Champions: not static, so test/fishing.c can call it.
+u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
     enum Species wildMonSpecies = wildMonInfo->wildPokemon[wildMonIndex].species;

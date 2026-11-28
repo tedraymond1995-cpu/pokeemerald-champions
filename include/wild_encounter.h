@@ -74,6 +74,8 @@ u32 ChooseWildMonIndex_Land(void);
 u32 ChooseWildMonIndex_Water(void);
 u32 ChooseWildMonIndex_Rocks(void);
 u32 ChooseHiddenMonIndex(void);
+u32 GetFishingSlotFromRoll(u32 roll); // Pokémon Emerald Champions: one fishing table per area
+u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod);
 bool32 MapHasNoEncounterData(void);
 enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);
 

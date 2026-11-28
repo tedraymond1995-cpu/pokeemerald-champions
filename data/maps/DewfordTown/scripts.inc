@@ -86,13 +86,12 @@ DewfordTown_EventScript_HallSign::
 	msgbox DewfordTown_Text_HallSign, MSGBOX_SIGN
 	end
 
+@ Pokémon Emerald Champions: the Super Rod is the only rod in the game, so this
+@ fisherman no longer gives an Old Rod. He goes straight to his fishing talk.
 DewfordTown_EventScript_OldRodFisherman::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_OLD_ROD, DewfordTown_EventScript_HowsFishing
-	msgbox DewfordTown_Text_GettingItchToFish, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_GiveOldRod
-	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_NotGettingItchToFish
+	goto DewfordTown_EventScript_HowsFishing
 	end
 
 DewfordTown_EventScript_GiveOldRod::
